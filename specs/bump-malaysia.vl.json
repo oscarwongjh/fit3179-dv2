@@ -1,0 +1,280 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Bump chart. Each line follows where series from one country ranked, by weeks in Malaysia's Netflix Top 10 for TV, in each year from 2021 to 2026. Malaysia is in the main data colour, the United Kingdom in the highlight colour, the rest in grey, and every line is labelled at both ends.",
+  "title": {
+    "text": "Malaysian series climbed the ranks",
+    "subtitle": [
+      "Ranking of where Malaysia's Top 10 series were made, by weeks in the Top 10 each year.",
+      "2021 counts from July and 2026 runs to early October."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "params": [
+    {
+      "name": "mark",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "accent",
+      "value": "#d9601f"
+    },
+    {
+      "name": "context",
+      "value": "#a89c8a"
+    },
+    {
+      "name": "ink",
+      "value": "#231c14"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    }
+  ],
+  "data": {
+    "url": "data/netflix_my_group_year.csv",
+    "format": {
+      "parse": {
+        "year": "number",
+        "rank": "number",
+        "weeks": "number",
+        "total": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum.group === 'Other' ? 'Everywhere else' : datum.group",
+      "as": "who"
+    },
+    {
+      "calculate": "datum.group === 'Malaysia' ? 'mark' : datum.group === 'United Kingdom' ? 'accent' : 'context'",
+      "as": "tone"
+    }
+  ],
+  "width": 740,
+  "height": 300,
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "axis": {
+        "title": "Year in Malaysia's Top 10",
+        "labelAngle": 0,
+        "labelFontSize": 13,
+        "domain": false,
+        "ticks": false,
+        "orient": "top",
+        "labelPadding": 10,
+        "titleFontSize": 12,
+        "titlePadding": 8
+      }
+    },
+    "y": {
+      "field": "rank",
+      "type": "ordinal",
+      "axis": null
+    },
+    "detail": {
+      "field": "who"
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeCap": "round",
+        "strokeJoin": "round",
+        "interpolate": "monotone"
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum.tone === 'mark'",
+            "value": {
+              "expr": "mark"
+            }
+          },
+          "value": {
+            "expr": "context"
+          }
+        },
+        "strokeWidth": {
+          "condition": {
+            "test": "datum.group === 'Malaysia'",
+            "value": 5
+          },
+          "value": 2.5
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.group === 'United Kingdom'"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeCap": "round",
+        "strokeJoin": "round",
+        "interpolate": "monotone",
+        "strokeWidth": 2.5,
+        "color": {
+          "expr": "accent"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 1
+      },
+      "encoding": {
+        "size": {
+          "condition": {
+            "test": "datum.group === 'Malaysia'",
+            "value": 150
+          },
+          "value": 70
+        },
+        "color": {
+          "condition": [
+            {
+              "test": "datum.tone === 'mark'",
+              "value": {
+                "expr": "mark"
+              }
+            },
+            {
+              "test": "datum.tone === 'accent'",
+              "value": {
+                "expr": "accent"
+              }
+            }
+          ],
+          "value": {
+            "expr": "context"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "who",
+            "title": "Made in"
+          },
+          {
+            "field": "year",
+            "title": "Year"
+          },
+          {
+            "field": "rank",
+            "title": "Rank"
+          },
+          {
+            "field": "weeks",
+            "title": "Weeks in the Top 10"
+          },
+          {
+            "field": "total",
+            "title": "All matched weeks that year"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.year === 2021"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -14,
+        "fontSize": 13,
+        "fontWeight": {
+          "expr": "datum.group === 'Malaysia' ? 700 : 400"
+        }
+      },
+      "encoding": {
+        "text": {
+          "field": "who"
+        },
+        "color": {
+          "condition": [
+            {
+              "test": "datum.tone === 'mark'",
+              "value": {
+                "expr": "mark"
+              }
+            },
+            {
+              "test": "datum.tone === 'accent'",
+              "value": {
+                "expr": "accent"
+              }
+            }
+          ],
+          "value": {
+            "expr": "inkMuted"
+          }
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.year === 2026"
+        },
+        {
+          "calculate": "datum.rank + '. ' + datum.who",
+          "as": "end_label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 14,
+        "fontSize": 13,
+        "fontWeight": {
+          "expr": "datum.group === 'Malaysia' ? 700 : 400"
+        }
+      },
+      "encoding": {
+        "text": {
+          "field": "end_label"
+        },
+        "color": {
+          "condition": [
+            {
+              "test": "datum.tone === 'mark'",
+              "value": {
+                "expr": "mark"
+              }
+            },
+            {
+              "test": "datum.tone === 'accent'",
+              "value": {
+                "expr": "accent"
+              }
+            }
+          ],
+          "value": {
+            "expr": "inkMuted"
+          }
+        }
+      }
+    }
+  ],
+  "padding": 0,
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

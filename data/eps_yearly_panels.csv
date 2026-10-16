@@ -1,0 +1,518 @@
+panel,series,iso,year,med,n
+United States,United States,US,1991,15.0,200
+United States,United States,US,1992,17.0,223
+United States,United States,US,1993,18.0,229
+United States,United States,US,1994,18.1,232
+United States,United States,US,1995,17.5,256
+United States,United States,US,1996,17.0,276
+United States,United States,US,1997,18.0,285
+United States,United States,US,1998,18.3,283
+United States,United States,US,1999,17.3,298
+United States,United States,US,2000,14.7,331
+United States,United States,US,2001,14.0,329
+United States,United States,US,2002,13.0,344
+United States,United States,US,2003,13.3,341
+United States,United States,US,2004,13.0,409
+United States,United States,US,2005,13.0,424
+United States,United States,US,2006,13.0,457
+United States,United States,US,2007,13.0,431
+United States,United States,US,2008,13.0,471
+United States,United States,US,2009,13.0,513
+United States,United States,US,2010,13.0,586
+United States,United States,US,2011,12.5,638
+United States,United States,US,2012,12.0,674
+United States,United States,US,2013,11.7,743
+United States,United States,US,2014,10.5,805
+United States,United States,US,2015,10.0,937
+United States,United States,US,2016,10.0,1015
+United States,United States,US,2017,10.0,1110
+United States,United States,US,2018,10.0,1196
+United States,United States,US,2019,9.3,1301
+United States,United States,US,2020,9.0,1393
+United States,United States,US,2021,8.0,1445
+United States,United States,US,2022,8.0,1368
+United States,United States,US,2023,8.0,1234
+United States,United States,US,2024,8.0,1023
+United States,United Kingdom,GB,1991,6.7,94
+United States,United Kingdom,GB,1992,6.0,98
+United States,United Kingdom,GB,1993,6.0,103
+United States,United Kingdom,GB,1994,6.0,99
+United States,United Kingdom,GB,1995,6.0,84
+United States,United Kingdom,GB,1996,6.0,89
+United States,United Kingdom,GB,1997,6.3,107
+United States,United Kingdom,GB,1998,6.0,132
+United States,United Kingdom,GB,1999,6.3,146
+United States,United Kingdom,GB,2000,6.0,145
+United States,United Kingdom,GB,2001,6.5,164
+United States,United Kingdom,GB,2002,6.1,170
+United States,United Kingdom,GB,2003,6.0,190
+United States,United Kingdom,GB,2004,6.0,196
+United States,United Kingdom,GB,2005,6.0,213
+United States,United Kingdom,GB,2006,6.4,196
+United States,United Kingdom,GB,2007,6.0,191
+United States,United Kingdom,GB,2008,6.0,208
+United States,United Kingdom,GB,2009,6.0,242
+United States,United Kingdom,GB,2010,6.0,276
+United States,United Kingdom,GB,2011,6.0,288
+United States,United Kingdom,GB,2012,6.0,317
+United States,United Kingdom,GB,2013,6.0,308
+United States,United Kingdom,GB,2014,6.0,339
+United States,United Kingdom,GB,2015,6.0,344
+United States,United Kingdom,GB,2016,6.0,367
+United States,United Kingdom,GB,2017,6.0,359
+United States,United Kingdom,GB,2018,6.0,377
+United States,United Kingdom,GB,2019,6.0,402
+United States,United Kingdom,GB,2020,6.0,398
+United States,United Kingdom,GB,2021,6.0,442
+United States,United Kingdom,GB,2022,6.0,457
+United States,United Kingdom,GB,2023,6.0,466
+United States,United Kingdom,GB,2024,6.0,416
+Japan,Japan,JP,1991,13.0,71
+Japan,Japan,JP,1992,11.0,87
+Japan,Japan,JP,1993,11.0,98
+Japan,Japan,JP,1994,12.8,108
+Japan,Japan,JP,1995,15.6,112
+Japan,Japan,JP,1996,20.8,115
+Japan,Japan,JP,1997,25.0,127
+Japan,Japan,JP,1998,24.0,145
+Japan,Japan,JP,1999,19.0,147
+Japan,Japan,JP,2000,17.3,155
+Japan,Japan,JP,2001,16.0,171
+Japan,Japan,JP,2002,17.3,205
+Japan,Japan,JP,2003,16.0,232
+Japan,Japan,JP,2004,17.3,249
+Japan,Japan,JP,2005,13.9,286
+Japan,Japan,JP,2006,13.0,306
+Japan,Japan,JP,2007,13.0,321
+Japan,Japan,JP,2008,13.0,309
+Japan,Japan,JP,2009,12.0,296
+Japan,Japan,JP,2010,12.0,304
+Japan,Japan,JP,2011,12.0,329
+Japan,Japan,JP,2012,12.0,379
+Japan,Japan,JP,2013,12.0,436
+Japan,Japan,JP,2014,12.0,464
+Japan,Japan,JP,2015,12.0,521
+Japan,Japan,JP,2016,12.0,537
+Japan,Japan,JP,2017,12.0,606
+Japan,Japan,JP,2018,12.0,607
+Japan,Japan,JP,2019,12.0,602
+Japan,Japan,JP,2020,12.0,599
+Japan,Japan,JP,2021,12.0,641
+Japan,Japan,JP,2022,12.0,716
+Japan,Japan,JP,2023,12.0,737
+Japan,Japan,JP,2024,12.0,735
+Japan,United Kingdom,GB,1991,6.7,94
+Japan,United Kingdom,GB,1992,6.0,98
+Japan,United Kingdom,GB,1993,6.0,103
+Japan,United Kingdom,GB,1994,6.0,99
+Japan,United Kingdom,GB,1995,6.0,84
+Japan,United Kingdom,GB,1996,6.0,89
+Japan,United Kingdom,GB,1997,6.3,107
+Japan,United Kingdom,GB,1998,6.0,132
+Japan,United Kingdom,GB,1999,6.3,146
+Japan,United Kingdom,GB,2000,6.0,145
+Japan,United Kingdom,GB,2001,6.5,164
+Japan,United Kingdom,GB,2002,6.1,170
+Japan,United Kingdom,GB,2003,6.0,190
+Japan,United Kingdom,GB,2004,6.0,196
+Japan,United Kingdom,GB,2005,6.0,213
+Japan,United Kingdom,GB,2006,6.4,196
+Japan,United Kingdom,GB,2007,6.0,191
+Japan,United Kingdom,GB,2008,6.0,208
+Japan,United Kingdom,GB,2009,6.0,242
+Japan,United Kingdom,GB,2010,6.0,276
+Japan,United Kingdom,GB,2011,6.0,288
+Japan,United Kingdom,GB,2012,6.0,317
+Japan,United Kingdom,GB,2013,6.0,308
+Japan,United Kingdom,GB,2014,6.0,339
+Japan,United Kingdom,GB,2015,6.0,344
+Japan,United Kingdom,GB,2016,6.0,367
+Japan,United Kingdom,GB,2017,6.0,359
+Japan,United Kingdom,GB,2018,6.0,377
+Japan,United Kingdom,GB,2019,6.0,402
+Japan,United Kingdom,GB,2020,6.0,398
+Japan,United Kingdom,GB,2021,6.0,442
+Japan,United Kingdom,GB,2022,6.0,457
+Japan,United Kingdom,GB,2023,6.0,466
+Japan,United Kingdom,GB,2024,6.0,416
+South Korea,South Korea,KR,2002,20.0,18
+South Korea,South Korea,KR,2003,20.0,28
+South Korea,South Korea,KR,2004,20.0,35
+South Korea,South Korea,KR,2005,16.5,42
+South Korea,South Korea,KR,2006,17.0,48
+South Korea,South Korea,KR,2007,17.0,50
+South Korea,South Korea,KR,2008,20.0,51
+South Korea,South Korea,KR,2009,20.0,62
+South Korea,South Korea,KR,2010,20.0,86
+South Korea,South Korea,KR,2011,20.0,109
+South Korea,South Korea,KR,2012,20.0,127
+South Korea,South Korea,KR,2013,18.5,160
+South Korea,South Korea,KR,2014,16.0,202
+South Korea,South Korea,KR,2015,16.0,245
+South Korea,South Korea,KR,2016,16.0,283
+South Korea,South Korea,KR,2017,16.0,319
+South Korea,South Korea,KR,2018,16.0,338
+South Korea,South Korea,KR,2019,16.0,357
+South Korea,South Korea,KR,2020,16.0,384
+South Korea,South Korea,KR,2021,12.0,425
+South Korea,South Korea,KR,2022,12.0,430
+South Korea,South Korea,KR,2023,12.0,404
+South Korea,South Korea,KR,2024,12.0,385
+South Korea,United Kingdom,GB,1991,6.7,94
+South Korea,United Kingdom,GB,1992,6.0,98
+South Korea,United Kingdom,GB,1993,6.0,103
+South Korea,United Kingdom,GB,1994,6.0,99
+South Korea,United Kingdom,GB,1995,6.0,84
+South Korea,United Kingdom,GB,1996,6.0,89
+South Korea,United Kingdom,GB,1997,6.3,107
+South Korea,United Kingdom,GB,1998,6.0,132
+South Korea,United Kingdom,GB,1999,6.3,146
+South Korea,United Kingdom,GB,2000,6.0,145
+South Korea,United Kingdom,GB,2001,6.5,164
+South Korea,United Kingdom,GB,2002,6.1,170
+South Korea,United Kingdom,GB,2003,6.0,190
+South Korea,United Kingdom,GB,2004,6.0,196
+South Korea,United Kingdom,GB,2005,6.0,213
+South Korea,United Kingdom,GB,2006,6.4,196
+South Korea,United Kingdom,GB,2007,6.0,191
+South Korea,United Kingdom,GB,2008,6.0,208
+South Korea,United Kingdom,GB,2009,6.0,242
+South Korea,United Kingdom,GB,2010,6.0,276
+South Korea,United Kingdom,GB,2011,6.0,288
+South Korea,United Kingdom,GB,2012,6.0,317
+South Korea,United Kingdom,GB,2013,6.0,308
+South Korea,United Kingdom,GB,2014,6.0,339
+South Korea,United Kingdom,GB,2015,6.0,344
+South Korea,United Kingdom,GB,2016,6.0,367
+South Korea,United Kingdom,GB,2017,6.0,359
+South Korea,United Kingdom,GB,2018,6.0,377
+South Korea,United Kingdom,GB,2019,6.0,402
+South Korea,United Kingdom,GB,2020,6.0,398
+South Korea,United Kingdom,GB,2021,6.0,442
+South Korea,United Kingdom,GB,2022,6.0,457
+South Korea,United Kingdom,GB,2023,6.0,466
+South Korea,United Kingdom,GB,2024,6.0,416
+China,China,CN,2000,36.0,22
+China,China,CN,2001,35.8,21
+China,China,CN,2002,40.0,27
+China,China,CN,2003,39.0,22
+China,China,CN,2004,36.0,31
+China,China,CN,2005,35.5,26
+China,China,CN,2006,35.0,30
+China,China,CN,2007,42.5,28
+China,China,CN,2008,38.5,32
+China,China,CN,2009,41.0,38
+China,China,CN,2010,39.0,43
+China,China,CN,2011,38.0,42
+China,China,CN,2012,36.0,39
+China,China,CN,2013,36.0,49
+China,China,CN,2014,34.0,65
+China,China,CN,2015,30.0,101
+China,China,CN,2016,28.0,140
+China,China,CN,2017,30.0,186
+China,China,CN,2018,35.0,221
+China,China,CN,2019,34.0,277
+China,China,CN,2020,31.0,329
+China,China,CN,2021,30.0,365
+China,China,CN,2022,30.0,370
+China,China,CN,2023,28.5,362
+China,China,CN,2024,30.0,381
+China,United Kingdom,GB,1991,6.7,94
+China,United Kingdom,GB,1992,6.0,98
+China,United Kingdom,GB,1993,6.0,103
+China,United Kingdom,GB,1994,6.0,99
+China,United Kingdom,GB,1995,6.0,84
+China,United Kingdom,GB,1996,6.0,89
+China,United Kingdom,GB,1997,6.3,107
+China,United Kingdom,GB,1998,6.0,132
+China,United Kingdom,GB,1999,6.3,146
+China,United Kingdom,GB,2000,6.0,145
+China,United Kingdom,GB,2001,6.5,164
+China,United Kingdom,GB,2002,6.1,170
+China,United Kingdom,GB,2003,6.0,190
+China,United Kingdom,GB,2004,6.0,196
+China,United Kingdom,GB,2005,6.0,213
+China,United Kingdom,GB,2006,6.4,196
+China,United Kingdom,GB,2007,6.0,191
+China,United Kingdom,GB,2008,6.0,208
+China,United Kingdom,GB,2009,6.0,242
+China,United Kingdom,GB,2010,6.0,276
+China,United Kingdom,GB,2011,6.0,288
+China,United Kingdom,GB,2012,6.0,317
+China,United Kingdom,GB,2013,6.0,308
+China,United Kingdom,GB,2014,6.0,339
+China,United Kingdom,GB,2015,6.0,344
+China,United Kingdom,GB,2016,6.0,367
+China,United Kingdom,GB,2017,6.0,359
+China,United Kingdom,GB,2018,6.0,377
+China,United Kingdom,GB,2019,6.0,402
+China,United Kingdom,GB,2020,6.0,398
+China,United Kingdom,GB,2021,6.0,442
+China,United Kingdom,GB,2022,6.0,457
+China,United Kingdom,GB,2023,6.0,466
+China,United Kingdom,GB,2024,6.0,416
+France,France,FR,1991,13.0,19
+France,France,FR,1992,24.6,16
+France,France,FR,1993,19.7,19
+France,France,FR,1994,21.4,22
+France,France,FR,1995,26.0,26
+France,France,FR,1996,26.0,25
+France,France,FR,1997,26.0,37
+France,France,FR,1998,20.7,35
+France,France,FR,1999,20.0,39
+France,France,FR,2000,26.0,31
+France,France,FR,2001,19.5,34
+France,France,FR,2002,19.5,35
+France,France,FR,2003,11.0,34
+France,France,FR,2004,22.9,38
+France,France,FR,2005,26.0,46
+France,France,FR,2006,25.0,46
+France,France,FR,2007,19.7,46
+France,France,FR,2008,14.2,43
+France,France,FR,2009,18.3,51
+France,France,FR,2010,14.2,59
+France,France,FR,2011,12.1,58
+France,France,FR,2012,10.0,63
+France,France,FR,2013,9.3,54
+France,France,FR,2014,9.4,68
+France,France,FR,2015,8.0,75
+France,France,FR,2016,7.8,88
+France,France,FR,2017,6.7,99
+France,France,FR,2018,6.0,121
+France,France,FR,2019,6.0,142
+France,France,FR,2020,6.0,159
+France,France,FR,2021,6.0,173
+France,France,FR,2022,6.0,177
+France,France,FR,2023,6.0,179
+France,France,FR,2024,6.0,154
+France,United Kingdom,GB,1991,6.7,94
+France,United Kingdom,GB,1992,6.0,98
+France,United Kingdom,GB,1993,6.0,103
+France,United Kingdom,GB,1994,6.0,99
+France,United Kingdom,GB,1995,6.0,84
+France,United Kingdom,GB,1996,6.0,89
+France,United Kingdom,GB,1997,6.3,107
+France,United Kingdom,GB,1998,6.0,132
+France,United Kingdom,GB,1999,6.3,146
+France,United Kingdom,GB,2000,6.0,145
+France,United Kingdom,GB,2001,6.5,164
+France,United Kingdom,GB,2002,6.1,170
+France,United Kingdom,GB,2003,6.0,190
+France,United Kingdom,GB,2004,6.0,196
+France,United Kingdom,GB,2005,6.0,213
+France,United Kingdom,GB,2006,6.4,196
+France,United Kingdom,GB,2007,6.0,191
+France,United Kingdom,GB,2008,6.0,208
+France,United Kingdom,GB,2009,6.0,242
+France,United Kingdom,GB,2010,6.0,276
+France,United Kingdom,GB,2011,6.0,288
+France,United Kingdom,GB,2012,6.0,317
+France,United Kingdom,GB,2013,6.0,308
+France,United Kingdom,GB,2014,6.0,339
+France,United Kingdom,GB,2015,6.0,344
+France,United Kingdom,GB,2016,6.0,367
+France,United Kingdom,GB,2017,6.0,359
+France,United Kingdom,GB,2018,6.0,377
+France,United Kingdom,GB,2019,6.0,402
+France,United Kingdom,GB,2020,6.0,398
+France,United Kingdom,GB,2021,6.0,442
+France,United Kingdom,GB,2022,6.0,457
+France,United Kingdom,GB,2023,6.0,466
+France,United Kingdom,GB,2024,6.0,416
+Germany,Germany,DE,1994,15.5,19
+Germany,Germany,DE,1995,15.5,21
+Germany,Germany,DE,1996,14.8,28
+Germany,Germany,DE,1997,14.8,28
+Germany,Germany,DE,1998,14.8,30
+Germany,Germany,DE,1999,13.0,21
+Germany,Germany,DE,2000,13.0,19
+Germany,Germany,DE,2001,12.7,20
+Germany,Germany,DE,2002,19.3,26
+Germany,Germany,DE,2003,13.7,34
+Germany,Germany,DE,2004,9.0,33
+Germany,Germany,DE,2005,8.7,37
+Germany,Germany,DE,2006,9.0,37
+Germany,Germany,DE,2007,9.8,36
+Germany,Germany,DE,2008,8.9,33
+Germany,Germany,DE,2009,8.0,29
+Germany,Germany,DE,2010,6.2,32
+Germany,Germany,DE,2011,8.0,37
+Germany,Germany,DE,2012,8.0,41
+Germany,Germany,DE,2013,8.8,44
+Germany,Germany,DE,2014,8.9,52
+Germany,Germany,DE,2015,8.0,54
+Germany,Germany,DE,2016,6.0,71
+Germany,Germany,DE,2017,6.0,73
+Germany,Germany,DE,2018,6.0,95
+Germany,Germany,DE,2019,6.0,101
+Germany,Germany,DE,2020,6.0,121
+Germany,Germany,DE,2021,6.0,113
+Germany,Germany,DE,2022,6.0,131
+Germany,Germany,DE,2023,6.0,118
+Germany,Germany,DE,2024,6.0,105
+Germany,United Kingdom,GB,1991,6.7,94
+Germany,United Kingdom,GB,1992,6.0,98
+Germany,United Kingdom,GB,1993,6.0,103
+Germany,United Kingdom,GB,1994,6.0,99
+Germany,United Kingdom,GB,1995,6.0,84
+Germany,United Kingdom,GB,1996,6.0,89
+Germany,United Kingdom,GB,1997,6.3,107
+Germany,United Kingdom,GB,1998,6.0,132
+Germany,United Kingdom,GB,1999,6.3,146
+Germany,United Kingdom,GB,2000,6.0,145
+Germany,United Kingdom,GB,2001,6.5,164
+Germany,United Kingdom,GB,2002,6.1,170
+Germany,United Kingdom,GB,2003,6.0,190
+Germany,United Kingdom,GB,2004,6.0,196
+Germany,United Kingdom,GB,2005,6.0,213
+Germany,United Kingdom,GB,2006,6.4,196
+Germany,United Kingdom,GB,2007,6.0,191
+Germany,United Kingdom,GB,2008,6.0,208
+Germany,United Kingdom,GB,2009,6.0,242
+Germany,United Kingdom,GB,2010,6.0,276
+Germany,United Kingdom,GB,2011,6.0,288
+Germany,United Kingdom,GB,2012,6.0,317
+Germany,United Kingdom,GB,2013,6.0,308
+Germany,United Kingdom,GB,2014,6.0,339
+Germany,United Kingdom,GB,2015,6.0,344
+Germany,United Kingdom,GB,2016,6.0,367
+Germany,United Kingdom,GB,2017,6.0,359
+Germany,United Kingdom,GB,2018,6.0,377
+Germany,United Kingdom,GB,2019,6.0,402
+Germany,United Kingdom,GB,2020,6.0,398
+Germany,United Kingdom,GB,2021,6.0,442
+Germany,United Kingdom,GB,2022,6.0,457
+Germany,United Kingdom,GB,2023,6.0,466
+Germany,United Kingdom,GB,2024,6.0,416
+Canada,Canada,CA,1991,18.6,24
+Canada,Canada,CA,1992,15.1,28
+Canada,Canada,CA,1993,13.7,32
+Canada,Canada,CA,1994,16.9,34
+Canada,Canada,CA,1995,19.9,42
+Canada,Canada,CA,1996,21.4,51
+Canada,Canada,CA,1997,19.5,64
+Canada,Canada,CA,1998,18.7,78
+Canada,Canada,CA,1999,21.7,79
+Canada,Canada,CA,2000,22.0,79
+Canada,Canada,CA,2001,20.8,70
+Canada,Canada,CA,2002,14.3,71
+Canada,Canada,CA,2003,13.7,81
+Canada,Canada,CA,2004,13.0,86
+Canada,Canada,CA,2005,16.2,88
+Canada,Canada,CA,2006,19.2,78
+Canada,Canada,CA,2007,17.5,71
+Canada,Canada,CA,2008,15.8,82
+Canada,Canada,CA,2009,13.5,88
+Canada,Canada,CA,2010,13.0,100
+Canada,Canada,CA,2011,13.0,88
+Canada,Canada,CA,2012,13.0,87
+Canada,Canada,CA,2013,12.2,86
+Canada,Canada,CA,2014,12.0,90
+Canada,Canada,CA,2015,10.7,94
+Canada,Canada,CA,2016,10.0,96
+Canada,Canada,CA,2017,10.0,97
+Canada,Canada,CA,2018,10.0,96
+Canada,Canada,CA,2019,10.0,86
+Canada,Canada,CA,2020,10.0,84
+Canada,Canada,CA,2021,9.0,84
+Canada,Canada,CA,2022,8.7,83
+Canada,Canada,CA,2023,8.5,73
+Canada,Canada,CA,2024,8.0,53
+Canada,United Kingdom,GB,1991,6.7,94
+Canada,United Kingdom,GB,1992,6.0,98
+Canada,United Kingdom,GB,1993,6.0,103
+Canada,United Kingdom,GB,1994,6.0,99
+Canada,United Kingdom,GB,1995,6.0,84
+Canada,United Kingdom,GB,1996,6.0,89
+Canada,United Kingdom,GB,1997,6.3,107
+Canada,United Kingdom,GB,1998,6.0,132
+Canada,United Kingdom,GB,1999,6.3,146
+Canada,United Kingdom,GB,2000,6.0,145
+Canada,United Kingdom,GB,2001,6.5,164
+Canada,United Kingdom,GB,2002,6.1,170
+Canada,United Kingdom,GB,2003,6.0,190
+Canada,United Kingdom,GB,2004,6.0,196
+Canada,United Kingdom,GB,2005,6.0,213
+Canada,United Kingdom,GB,2006,6.4,196
+Canada,United Kingdom,GB,2007,6.0,191
+Canada,United Kingdom,GB,2008,6.0,208
+Canada,United Kingdom,GB,2009,6.0,242
+Canada,United Kingdom,GB,2010,6.0,276
+Canada,United Kingdom,GB,2011,6.0,288
+Canada,United Kingdom,GB,2012,6.0,317
+Canada,United Kingdom,GB,2013,6.0,308
+Canada,United Kingdom,GB,2014,6.0,339
+Canada,United Kingdom,GB,2015,6.0,344
+Canada,United Kingdom,GB,2016,6.0,367
+Canada,United Kingdom,GB,2017,6.0,359
+Canada,United Kingdom,GB,2018,6.0,377
+Canada,United Kingdom,GB,2019,6.0,402
+Canada,United Kingdom,GB,2020,6.0,398
+Canada,United Kingdom,GB,2021,6.0,442
+Canada,United Kingdom,GB,2022,6.0,457
+Canada,United Kingdom,GB,2023,6.0,466
+Canada,United Kingdom,GB,2024,6.0,416
+Australia,Australia,AU,1993,14.6,20
+Australia,Australia,AU,1994,17.9,18
+Australia,Australia,AU,1995,16.2,17
+Australia,Australia,AU,1997,21.0,18
+Australia,Australia,AU,1998,22.0,19
+Australia,Australia,AU,1999,22.0,16
+Australia,Australia,AU,2000,21.5,15
+Australia,Australia,AU,2002,23.8,20
+Australia,Australia,AU,2003,16.7,20
+Australia,Australia,AU,2004,23.0,22
+Australia,Australia,AU,2005,13.0,21
+Australia,Australia,AU,2006,13.3,24
+Australia,Australia,AU,2007,11.3,27
+Australia,Australia,AU,2008,13.6,29
+Australia,Australia,AU,2009,14.5,30
+Australia,Australia,AU,2010,13.7,30
+Australia,Australia,AU,2011,11.3,35
+Australia,Australia,AU,2012,11.2,42
+Australia,Australia,AU,2013,9.0,52
+Australia,Australia,AU,2014,8.0,61
+Australia,Australia,AU,2015,6.2,68
+Australia,Australia,AU,2016,6.5,61
+Australia,Australia,AU,2017,7.0,67
+Australia,Australia,AU,2018,8.0,68
+Australia,Australia,AU,2019,7.0,75
+Australia,Australia,AU,2020,6.0,72
+Australia,Australia,AU,2021,6.2,70
+Australia,Australia,AU,2022,6.6,82
+Australia,Australia,AU,2023,7.0,75
+Australia,Australia,AU,2024,7.0,65
+Australia,United Kingdom,GB,1991,6.7,94
+Australia,United Kingdom,GB,1992,6.0,98
+Australia,United Kingdom,GB,1993,6.0,103
+Australia,United Kingdom,GB,1994,6.0,99
+Australia,United Kingdom,GB,1995,6.0,84
+Australia,United Kingdom,GB,1996,6.0,89
+Australia,United Kingdom,GB,1997,6.3,107
+Australia,United Kingdom,GB,1998,6.0,132
+Australia,United Kingdom,GB,1999,6.3,146
+Australia,United Kingdom,GB,2000,6.0,145
+Australia,United Kingdom,GB,2001,6.5,164
+Australia,United Kingdom,GB,2002,6.1,170
+Australia,United Kingdom,GB,2003,6.0,190
+Australia,United Kingdom,GB,2004,6.0,196
+Australia,United Kingdom,GB,2005,6.0,213
+Australia,United Kingdom,GB,2006,6.4,196
+Australia,United Kingdom,GB,2007,6.0,191
+Australia,United Kingdom,GB,2008,6.0,208
+Australia,United Kingdom,GB,2009,6.0,242
+Australia,United Kingdom,GB,2010,6.0,276
+Australia,United Kingdom,GB,2011,6.0,288
+Australia,United Kingdom,GB,2012,6.0,317
+Australia,United Kingdom,GB,2013,6.0,308
+Australia,United Kingdom,GB,2014,6.0,339
+Australia,United Kingdom,GB,2015,6.0,344
+Australia,United Kingdom,GB,2016,6.0,367
+Australia,United Kingdom,GB,2017,6.0,359
+Australia,United Kingdom,GB,2018,6.0,377
+Australia,United Kingdom,GB,2019,6.0,402
+Australia,United Kingdom,GB,2020,6.0,398
+Australia,United Kingdom,GB,2021,6.0,442
+Australia,United Kingdom,GB,2022,6.0,457
+Australia,United Kingdom,GB,2023,6.0,466
+Australia,United Kingdom,GB,2024,6.0,416

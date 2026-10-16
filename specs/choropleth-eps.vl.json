@@ -1,0 +1,210 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Two choropleth maps, before 2005 and 2015 onward, of median episodes per season by country of production. Equal Earth projection, so country areas are comparable.",
+  "title": {
+    "text": "Where television was long, and where it still is",
+    "subtitle": [
+      "Median episodes per season, by country of production.",
+      "Countries with fewer than 10 series in a period are left grey."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "params": [
+    {
+      "name": "seq1",
+      "value": "#dbe5f0"
+    },
+    {
+      "name": "seq2",
+      "value": "#a9c0dc"
+    },
+    {
+      "name": "seq3",
+      "value": "#6e92c0"
+    },
+    {
+      "name": "seq4",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "seq5",
+      "value": "#1d3f6b"
+    },
+    {
+      "name": "noData",
+      "value": "#e6dccb"
+    },
+    {
+      "name": "border",
+      "value": "#f5efe2"
+    }
+  ],
+  "data": {
+    "url": "data/eps_by_country_period.csv",
+    "format": {
+      "parse": {
+        "topo_id": "string"
+      }
+    }
+  },
+  "transform": [
+    {
+      "lookup": "topo_id",
+      "from": {
+        "data": {
+          "url": "data/world-110m.json",
+          "format": {
+            "type": "topojson",
+            "feature": "countries"
+          }
+        },
+        "key": "id"
+      },
+      "as": "geo"
+    }
+  ],
+  "facet": {
+    "column": {
+      "field": "period",
+      "type": "nominal",
+      "title": null,
+      "sort": [
+        "pre-2005",
+        "2015+"
+      ],
+      "header": {
+        "labelExpr": "datum.value === 'pre-2005' ? 'Before 2005' : '2015 onward'",
+        "labelFontSize": 14,
+        "labelFontWeight": 600,
+        "labelAnchor": "start",
+        "labelPadding": 4
+      }
+    }
+  },
+  "spacing": 40,
+  "resolve": {
+    "scale": {
+      "color": "shared"
+    }
+  },
+  "spec": {
+    "width": 500,
+    "height": 285,
+    "layer": [
+      {
+        "data": {
+          "url": "data/world-110m.json",
+          "format": {
+            "type": "topojson",
+            "feature": "countries"
+          }
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": {
+            "expr": "noData"
+          },
+          "stroke": {
+            "expr": "border"
+          },
+          "strokeWidth": 0.4
+        },
+        "projection": {
+          "type": "equalEarth"
+        },
+        "transform": [
+          {
+            "filter": "datum.properties.name !== 'Antarctica'"
+          }
+        ]
+      },
+      {
+        "mark": {
+          "type": "geoshape",
+          "stroke": {
+            "expr": "border"
+          },
+          "strokeWidth": 0.4
+        },
+        "projection": {
+          "type": "equalEarth"
+        },
+        "encoding": {
+          "shape": {
+            "field": "geo",
+            "type": "geojson"
+          },
+          "color": {
+            "field": "med",
+            "type": "quantitative",
+            "title": "Episodes per season",
+            "scale": {
+              "type": "threshold",
+              "domain": [
+                8,
+                12,
+                20,
+                30
+              ],
+              "range": [
+                {
+                  "expr": "seq1"
+                },
+                {
+                  "expr": "seq2"
+                },
+                {
+                  "expr": "seq3"
+                },
+                {
+                  "expr": "seq4"
+                },
+                {
+                  "expr": "seq5"
+                }
+              ]
+            },
+            "legend": {
+              "orient": "bottom",
+              "direction": "horizontal",
+              "titleFontSize": 13,
+              "labelFontSize": 12,
+              "title": "Median episodes per season"
+            }
+          },
+          "tooltip": [
+            {
+              "field": "name",
+              "type": "nominal",
+              "title": "Country"
+            },
+            {
+              "field": "period",
+              "type": "nominal",
+              "title": "Period"
+            },
+            {
+              "field": "med",
+              "type": "quantitative",
+              "title": "Median episodes/season"
+            },
+            {
+              "field": "n",
+              "type": "quantitative",
+              "title": "Series in sample"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "padding": 0,
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

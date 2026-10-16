@@ -1,0 +1,626 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Box plot with every country shown as a dot. Each dot is one country's median episodes per season in a five-year period. The box spans the middle half of countries, the line inside it is the middle country, and the whisker runs from the shortest to the longest. The United Kingdom is joined across periods in the highlight colour. Dots are spread sideways by a fixed offset from the country code, so the layout is the same on every load.",
+  "title": {
+    "text": "The world closed in on short seasons",
+    "subtitle": [
+      "Each dot is a country's median episodes per season in that period. The box holds the",
+      "middle half of countries, and the line across it is the middle country.",
+      "Use the menu below the chart to follow one country."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "params": [
+    {
+      "name": "mark",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "markSoft",
+      "value": "#dbe5f0"
+    },
+    {
+      "name": "accent",
+      "value": "#d9601f"
+    },
+    {
+      "name": "ink",
+      "value": "#231c14"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    },
+    {
+      "name": "follow",
+      "value": "South Korea",
+      "bind": {
+        "input": "select",
+        "options": [
+          "South Korea",
+          "Japan",
+          "China",
+          "Taiwan",
+          "Hong Kong",
+          "United States",
+          "Mexico",
+          "Brazil",
+          "Türkiye",
+          "France",
+          "Germany",
+          "Spain",
+          "Italy",
+          "Greece",
+          "Russia",
+          "Poland",
+          "Belgium",
+          "Denmark",
+          "Sweden",
+          "Canada",
+          "Australia"
+        ],
+        "name": "Follow a country "
+      }
+    },
+    {
+      "name": "border",
+      "value": "#f5efe2"
+    },
+    {
+      "name": "reveal",
+      "value": 6,
+      "description": "How many of the six periods are uncovered, with fractions. A curtain in the page colour covers the rest, so the chart wipes on smoothly from left to right. js/charts.js moves it when the reader presses Play or drags the timeline; the default shows every period."
+    }
+  ],
+  "data": {
+    "url": "data/country_medians_5yr.csv"
+  },
+  "transform": [
+    {
+      "calculate": "(indexof('ABCDEFGHIJKLMNOPQRSTUVWXYZ', substring(datum.iso, 0, 1)) * 7 + indexof('ABCDEFGHIJKLMNOPQRSTUVWXYZ', substring(datum.iso, 1, 2)) * 13) % 23 / 22 - 0.5",
+      "as": "jitter"
+    }
+  ],
+  "width": 980,
+  "height": 380,
+  "layer": [
+    {
+      "mark": {
+        "type": "boxplot",
+        "extent": "min-max",
+        "size": 64,
+        "median": {
+          "color": {
+            "expr": "ink"
+          },
+          "strokeWidth": 2.5
+        },
+        "box": {
+          "fill": {
+            "expr": "markSoft"
+          },
+          "stroke": {
+            "expr": "mark"
+          }
+        },
+        "rule": {
+          "stroke": {
+            "expr": "mark"
+          }
+        },
+        "ticks": false
+      },
+      "encoding": {
+        "y": {
+          "field": "med",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              100
+            ]
+          },
+          "axis": {
+            "values": [
+              0,
+              6,
+              20,
+              40,
+              60,
+              80,
+              100
+            ],
+            "title": "Median episodes per season",
+            "titleFontSize": 12,
+            "labelFontSize": 12,
+            "gridOpacity": 0.7
+          }
+        },
+        "tooltip": null,
+        "x": {
+          "field": "period",
+          "type": "ordinal",
+          "sort": [
+            "1995 to 1999",
+            "2000 to 2004",
+            "2005 to 2009",
+            "2010 to 2014",
+            "2015 to 2019",
+            "2020 to 2025"
+          ],
+          "axis": {
+            "title": "Period the series first aired, with the number of countries that had at least 10 series",
+            "titleFontSize": 12,
+            "titlePadding": 10,
+            "labelFontSize": 13,
+            "labelAngle": 0,
+            "labelPadding": 8,
+            "domain": false,
+            "ticks": false,
+            "labelExpr": "[datum.label, {'1995 to 1999': '17 countries', '2000 to 2004': '24 countries', '2005 to 2009': '23 countries', '2010 to 2014': '30 countries', '2015 to 2019': '38 countries', '2020 to 2025': '47 countries'}[datum.label]]"
+          },
+          "scale": {
+            "paddingInner": 0.3,
+            "domain": [
+              "1995 to 1999",
+              "2000 to 2004",
+              "2005 to 2009",
+              "2010 to 2014",
+              "2015 to 2019",
+              "2020 to 2025"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 36,
+        "opacity": 0.8,
+        "xOffset": {
+          "expr": "datum.jitter * 54"
+        }
+      },
+      "encoding": {
+        "y": {
+          "field": "med",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "title": "Country"
+          },
+          {
+            "field": "period",
+            "title": "Period"
+          },
+          {
+            "field": "med",
+            "title": "Median episodes per season",
+            "format": ".1f"
+          },
+          {
+            "field": "n",
+            "title": "Series"
+          }
+        ],
+        "color": {
+          "field": "key",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "A country, one dot per period",
+              "United Kingdom",
+              "The country you follow"
+            ],
+            "range": [
+              {
+                "expr": "mark"
+              },
+              {
+                "expr": "accent"
+              },
+              {
+                "expr": "ink"
+              }
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top",
+            "direction": "horizontal",
+            "labelFontSize": 12,
+            "symbolType": "circle",
+            "symbolSize": 90,
+            "offset": 8,
+            "labelLimit": 260
+          }
+        },
+        "x": {
+          "field": "period",
+          "type": "ordinal",
+          "sort": [
+            "1995 to 1999",
+            "2000 to 2004",
+            "2005 to 2009",
+            "2010 to 2014",
+            "2015 to 2019",
+            "2020 to 2025"
+          ],
+          "axis": {
+            "title": "Period the series first aired, with the number of countries that had at least 10 series",
+            "titleFontSize": 12,
+            "titlePadding": 10,
+            "labelFontSize": 13,
+            "labelAngle": 0,
+            "labelPadding": 8,
+            "domain": false,
+            "ticks": false,
+            "labelExpr": "[datum.label, {'1995 to 1999': '17 countries', '2000 to 2004': '24 countries', '2005 to 2009': '23 countries', '2010 to 2014': '30 countries', '2015 to 2019': '38 countries', '2020 to 2025': '47 countries'}[datum.label]]"
+          },
+          "scale": {
+            "paddingInner": 0.3,
+            "domain": [
+              "1995 to 1999",
+              "2000 to 2004",
+              "2005 to 2009",
+              "2010 to 2014",
+              "2015 to 2019",
+              "2020 to 2025"
+            ]
+          }
+        }
+      },
+      "transform": [
+        {
+          "calculate": "'A country, one dot per period'",
+          "as": "key"
+        }
+      ]
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.iso === 'GB'"
+        },
+        {
+          "calculate": "'United Kingdom'",
+          "as": "key"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5,
+        "point": {
+          "size": 70,
+          "filled": true
+        }
+      },
+      "encoding": {
+        "y": {
+          "field": "med",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "title": "Country"
+          },
+          {
+            "field": "period",
+            "title": "Period"
+          },
+          {
+            "field": "med",
+            "title": "Median episodes per season",
+            "format": ".1f"
+          }
+        ],
+        "color": {
+          "field": "key",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "period",
+          "type": "ordinal",
+          "sort": [
+            "1995 to 1999",
+            "2000 to 2004",
+            "2005 to 2009",
+            "2010 to 2014",
+            "2015 to 2019",
+            "2020 to 2025"
+          ],
+          "axis": {
+            "title": "Period the series first aired, with the number of countries that had at least 10 series",
+            "titleFontSize": 12,
+            "titlePadding": 10,
+            "labelFontSize": 13,
+            "labelAngle": 0,
+            "labelPadding": 8,
+            "domain": false,
+            "ticks": false,
+            "labelExpr": "[datum.label, {'1995 to 1999': '17 countries', '2000 to 2004': '24 countries', '2005 to 2009': '23 countries', '2010 to 2014': '30 countries', '2015 to 2019': '38 countries', '2020 to 2025': '47 countries'}[datum.label]]"
+          },
+          "scale": {
+            "paddingInner": 0.3,
+            "domain": [
+              "1995 to 1999",
+              "2000 to 2004",
+              "2005 to 2009",
+              "2010 to 2014",
+              "2015 to 2019",
+              "2020 to 2025"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.name === follow"
+        },
+        {
+          "calculate": "'The country you follow'",
+          "as": "key"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2,
+        "strokeDash": [
+          5,
+          3
+        ],
+        "point": {
+          "size": 60,
+          "filled": true
+        }
+      },
+      "encoding": {
+        "y": {
+          "field": "med",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "key",
+          "type": "nominal"
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "title": "Country"
+          },
+          {
+            "field": "period",
+            "title": "Period"
+          },
+          {
+            "field": "med",
+            "title": "Median episodes per season",
+            "format": ".1f"
+          },
+          {
+            "field": "n",
+            "title": "Series"
+          }
+        ],
+        "x": {
+          "field": "period",
+          "type": "ordinal",
+          "sort": [
+            "1995 to 1999",
+            "2000 to 2004",
+            "2005 to 2009",
+            "2010 to 2014",
+            "2015 to 2019",
+            "2020 to 2025"
+          ],
+          "axis": {
+            "title": "Period the series first aired, with the number of countries that had at least 10 series",
+            "titleFontSize": 12,
+            "titlePadding": 10,
+            "labelFontSize": 13,
+            "labelAngle": 0,
+            "labelPadding": 8,
+            "domain": false,
+            "ticks": false,
+            "labelExpr": "[datum.label, {'1995 to 1999': '17 countries', '2000 to 2004': '24 countries', '2005 to 2009': '23 countries', '2010 to 2014': '30 countries', '2015 to 2019': '38 countries', '2020 to 2025': '47 countries'}[datum.label]]"
+          },
+          "scale": {
+            "paddingInner": 0.3,
+            "domain": [
+              "1995 to 1999",
+              "2000 to 2004",
+              "2005 to 2009",
+              "2010 to 2014",
+              "2015 to 2019",
+              "2020 to 2025"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.name === follow"
+        },
+        {
+          "joinaggregate": [
+            {
+              "op": "max",
+              "field": "period_start",
+              "as": "last"
+            }
+          ]
+        },
+        {
+          "filter": "datum.period_start === datum.last"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "dy": -10,
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": {
+          "expr": "ink"
+        }
+      },
+      "encoding": {
+        "y": {
+          "field": "med",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "name"
+        },
+        "x": {
+          "field": "period",
+          "type": "ordinal",
+          "sort": [
+            "1995 to 1999",
+            "2000 to 2004",
+            "2005 to 2009",
+            "2010 to 2014",
+            "2015 to 2019",
+            "2020 to 2025"
+          ],
+          "axis": {
+            "title": "Period the series first aired, with the number of countries that had at least 10 series",
+            "titleFontSize": 12,
+            "titlePadding": 10,
+            "labelFontSize": 13,
+            "labelAngle": 0,
+            "labelPadding": 8,
+            "domain": false,
+            "ticks": false,
+            "labelExpr": "[datum.label, {'1995 to 1999': '17 countries', '2000 to 2004': '24 countries', '2005 to 2009': '23 countries', '2010 to 2014': '30 countries', '2015 to 2019': '38 countries', '2020 to 2025': '47 countries'}[datum.label]]"
+          },
+          "scale": {
+            "paddingInner": 0.3,
+            "domain": [
+              "1995 to 1999",
+              "2000 to 2004",
+              "2005 to 2009",
+              "2010 to 2014",
+              "2015 to 2019",
+              "2020 to 2025"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "period": "1995 to 1999",
+            "y": 94,
+            "note": "Mexico, 94",
+            "dx": 12,
+            "align": "left",
+            "start": 1995
+          },
+          {
+            "period": "2000 to 2004",
+            "y": 54,
+            "note": "Middle half: 13 to 28 episodes",
+            "dx": 0,
+            "align": "center",
+            "start": 2000
+          },
+          {
+            "period": "2020 to 2025",
+            "y": 40,
+            "note": "Middle half: 6.5 to 10 episodes",
+            "dx": -40,
+            "align": "center",
+            "start": 2020
+          },
+          {
+            "period": "2020 to 2025",
+            "y": 2.2,
+            "note": "United Kingdom, 6 in every period",
+            "dx": -40,
+            "align": "right",
+            "start": 2020
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "baseline": "middle",
+        "fontSize": 12,
+        "align": {
+          "expr": "datum.align"
+        },
+        "dx": {
+          "expr": "datum.dx"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "period",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "note"
+        },
+        "color": {
+          "condition": {
+            "test": "indexof(datum.note, 'United Kingdom') === 0",
+            "value": {
+              "expr": "accent"
+            }
+          },
+          "value": {
+            "expr": "ink"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "mark": {
+        "type": "rect",
+        "x": {
+          "expr": "width * reveal / 6"
+        },
+        "x2": {
+          "expr": "width"
+        },
+        "y": 0,
+        "y2": {
+          "expr": "height"
+        },
+        "color": {
+          "expr": "border"
+        }
+      }
+    }
+  ],
+  "padding": 0,
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

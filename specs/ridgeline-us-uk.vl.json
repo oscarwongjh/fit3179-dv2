@@ -1,0 +1,263 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Ridgeline plot. For each decade, the share of new American and British series at each season length from 1 to 30 episodes, with longer seasons counted at 30. Rows overlap slightly so the shapes can be compared down the page.",
+  "title": {
+    "text": "American seasons slid onto the British shape",
+    "subtitle": [
+      "Share of each decade's new series at each season length. The peaks are the most",
+      "common lengths. The median, the middle series, is written at the right of each row."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "params": [
+    {
+      "name": "mark",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "markSoft",
+      "value": "#dbe5f0"
+    },
+    {
+      "name": "accent",
+      "value": "#d9601f"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    },
+    {
+      "name": "rowHeight",
+      "value": 74
+    }
+  ],
+  "data": {
+    "url": "data/eps_dist_us_uk.csv",
+    "format": {
+      "parse": {
+        "eps": "number",
+        "share": "number",
+        "n": "number",
+        "median": "number"
+      }
+    }
+  },
+  "facet": {
+    "row": {
+      "field": "decade",
+      "type": "ordinal",
+      "sort": [
+        "1990s",
+        "2000s",
+        "2010s",
+        "2020s"
+      ],
+      "header": {
+        "title": null,
+        "labelAngle": 0,
+        "labelAlign": "left",
+        "labelAnchor": "middle",
+        "labelFontSize": 14,
+        "labelFontWeight": 600,
+        "labelPadding": 12,
+        "labelOrient": "left"
+      }
+    }
+  },
+  "spacing": 0,
+  "spec": {
+    "width": 960,
+    "height": 74,
+    "layer": [
+      {
+        "mark": {
+          "type": "area",
+          "interpolate": "monotone",
+          "line": {
+            "strokeWidth": 2
+          },
+          "fillOpacity": 0.55
+        },
+        "encoding": {
+          "x": {
+            "field": "eps",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                1,
+                30
+              ],
+              "nice": false
+            },
+            "axis": {
+              "values": [
+                1,
+                6,
+                10,
+                13,
+                22,
+                30
+              ],
+              "labelExpr": "datum.value === 30 ? '30 or more' : datum.label",
+              "title": "Episodes per season",
+              "titleFontSize": 12,
+              "labelFontSize": 12,
+              "grid": true,
+              "gridDash": [
+                2,
+                3
+              ]
+            }
+          },
+          "y": {
+            "field": "share",
+            "type": "quantitative",
+            "stack": null,
+            "scale": {
+              "range": [
+                {
+                  "expr": "rowHeight"
+                },
+                {
+                  "expr": "-0.9 * rowHeight"
+                }
+              ]
+            },
+            "axis": null
+          },
+          "color": {
+            "field": "country",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "United States",
+                "United Kingdom"
+              ],
+              "range": [
+                {
+                  "expr": "mark"
+                },
+                {
+                  "expr": "accent"
+                }
+              ]
+            },
+            "legend": {
+              "title": null,
+              "orient": "top",
+              "direction": "horizontal",
+              "labelFontSize": 13,
+              "symbolType": "square",
+              "symbolSize": 160,
+              "offset": 6
+            }
+          },
+          "order": {
+            "field": "iso",
+            "sort": "descending"
+          },
+          "tooltip": [
+            {
+              "field": "country",
+              "title": "Country"
+            },
+            {
+              "field": "decade",
+              "title": "Decade"
+            },
+            {
+              "field": "eps",
+              "title": "Episodes per season"
+            },
+            {
+              "field": "share",
+              "title": "Share of new series",
+              "format": ".1%"
+            },
+            {
+              "field": "n",
+              "title": "Series in the decade"
+            }
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "datum.eps === 1 && datum.iso === 'US'"
+          },
+          {
+            "calculate": "'US median ' + format(datum.median, '.1f')",
+            "as": "lab"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "right",
+          "baseline": "middle",
+          "fontSize": 12,
+          "fontWeight": 600
+        },
+        "encoding": {
+          "x": {
+            "datum": 28.5,
+            "type": "quantitative"
+          },
+          "y": {
+            "value": 22
+          },
+          "text": {
+            "field": "lab"
+          },
+          "color": {
+            "field": "country",
+            "type": "nominal"
+          }
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "datum.eps === 1 && datum.iso === 'GB'"
+          },
+          {
+            "calculate": "'UK median ' + format(datum.median, '.1f')",
+            "as": "lab"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "right",
+          "baseline": "middle",
+          "fontSize": 12,
+          "fontWeight": 600
+        },
+        "encoding": {
+          "x": {
+            "datum": 28.5,
+            "type": "quantitative"
+          },
+          "y": {
+            "value": 40
+          },
+          "text": {
+            "field": "lab"
+          },
+          "color": {
+            "field": "country",
+            "type": "nominal"
+          }
+        }
+      }
+    ]
+  },
+  "padding": 0,
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

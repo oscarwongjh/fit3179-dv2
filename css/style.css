@@ -1,0 +1,236 @@
+/* Colour scheme. Every colour on the page and in the charts comes from here:
+   js/charts.js copies each --viz-* value into the spec param or signal of the
+   same name (--viz-ink-muted fills "inkMuted") before the chart renders. */
+/* scheme:start */
+:root{
+  --bg:#f5efe2;
+  --ink:#231c14;
+  --ink-muted:#62574a;
+  --rule:#ddd2bf;
+  --accent-text:#ad4416;
+  --viz-seq1:#dbe5f0;
+  --viz-seq2:#a9c0dc;
+  --viz-seq3:#6e92c0;
+  --viz-seq4:#3d6aa3;
+  --viz-seq5:#1d3f6b;
+  --viz-mark:#3d6aa3;
+  --viz-mark-soft:#dbe5f0;
+  --viz-accent:#d9601f;
+  --viz-halo:#1d3f6b;
+  --viz-accent-halo:#7a2e0c;
+  --viz-no-data:#e6dccb;
+  --viz-context:#a89c8a;
+  --viz-rule:#d3c8b4;
+  --tv-body:#6b4428;
+  --tv-trim:#2a1e15;
+  --tv-detail:#b08a5a;
+  --viz-border:var(--bg);
+  --viz-ink:var(--ink);
+  --viz-ink-muted:var(--ink-muted);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#18140f;
+  --ink:#f3ece0;
+  --ink-muted:#bdb2a2;
+  --rule:#383028;
+  --accent-text:#f08a52;
+  --viz-seq1:#1c2a3d;
+  --viz-seq2:#24406a;
+  --viz-seq3:#3561a0;
+  --viz-seq4:#5b8bd0;
+  --viz-seq5:#a7c6ef;
+  --viz-mark:#4f7fc4;
+  --viz-mark-soft:#1f2c40;
+  --viz-accent:#e2692a;
+  --viz-halo:#13233b;
+  --viz-accent-halo:#6b2a0b;
+  --viz-no-data:#2b251e;
+  --viz-context:#6f665a;
+  --viz-rule:#3d352c;
+  --tv-body:#5a3a24;
+  --tv-trim:#24190f;
+  --tv-detail:#9c7a50;
+}}
+:root[data-theme="dark"]{
+  --bg:#18140f;
+  --ink:#f3ece0;
+  --ink-muted:#bdb2a2;
+  --rule:#383028;
+  --accent-text:#f08a52;
+  --viz-seq1:#1c2a3d;
+  --viz-seq2:#24406a;
+  --viz-seq3:#3561a0;
+  --viz-seq4:#5b8bd0;
+  --viz-seq5:#a7c6ef;
+  --viz-mark:#4f7fc4;
+  --viz-mark-soft:#1f2c40;
+  --viz-accent:#e2692a;
+  --viz-halo:#13233b;
+  --viz-accent-halo:#6b2a0b;
+  --viz-no-data:#2b251e;
+  --viz-context:#6f665a;
+  --viz-rule:#3d352c;
+  --tv-body:#5a3a24;
+  --tv-trim:#24190f;
+  --tv-detail:#9c7a50;
+}
+/* scheme:end */
+
+/* Radio Canada was drawn for Canada's public broadcaster. Its width axis gives a
+   condensed cut for headings and numbers and a normal cut for reading. */
+:root{
+  --font-sans:"Radio Canada","Helvetica Neue",Arial,sans-serif;
+  --page:1040px; --gutter:24px; --col-gap:40px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.18em}
+.page{max-width:calc(var(--page) + 2 * var(--gutter));margin:0 auto;padding:0 var(--gutter)}
+
+/* One three-column grid for the masthead, key numbers, chapter openers and footer,
+   so their edges line up. Text sits in columns two and three; charts span all three. */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--col-gap)}
+
+.masthead{padding:24px 0 44px;border-bottom:1px solid var(--rule)}
+.kicker,.chapter-num,.colophon h2{margin:0;font-size:.78rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text)}
+.kicker{grid-column:1/-1;margin-bottom:16px}
+h1{grid-column:1/-1;margin:0 0 36px;font-size:clamp(3rem,9vw,6rem);font-weight:700;
+  font-stretch:75%;line-height:.9;letter-spacing:-.01em}
+.byline{margin:4px 0 0;font-size:.875rem;line-height:1.55;color:var(--ink-muted)}
+.byline strong{color:var(--ink);font-weight:600}
+.standfirst{grid-column:2/span 2;margin:0;max-width:34em;font-size:1.3rem;line-height:1.45}
+
+.stats{padding:36px 0 56px}
+.stat-num{display:block;font-size:3rem;font-weight:700;font-stretch:75%;line-height:1;
+  font-variant-numeric:tabular-nums}
+.stat-label{display:block;margin-top:10px;max-width:22em;font-size:.9rem;line-height:1.45;
+  color:var(--ink-muted)}
+
+/* Each chapter opens on a full-width 2px rule with its channel number, the strongest
+   divider on the page, so the story reads as five clear parts. */
+.chapter{margin-top:40px;padding:28px 0 24px;border-top:2px solid var(--ink)}
+.chapter-head{grid-column:1}
+.chapter-num{display:inline-block;margin-bottom:14px;padding:3px 8px 2px;border:1.5px solid var(--ink);
+  border-radius:4px;color:var(--ink);font-variant-numeric:tabular-nums}
+.chapter-num::before{content:"CH "}
+h2{margin:0;font-size:2.1rem;font-weight:700;font-stretch:80%;line-height:1.05}
+.prose{grid-column:2/span 2;max-width:32em;font-size:1.125rem}
+.prose p{margin:0 0 1em}
+.figure{grid-column:1/-1;margin:36px 0 56px;overflow-x:auto}
+
+/* The UK is the reference country throughout, so it wears the accent in text too. */
+.uk{color:var(--accent-text);font-weight:600}
+
+.colophon{margin-top:32px;padding:40px 0 72px;border-top:1px solid var(--rule);
+  font-size:.85rem;line-height:1.6;color:var(--ink-muted)}
+.colophon h2{margin-bottom:10px;color:var(--ink)}
+.colophon p{margin:0 0 .8em}
+
+@media (max-width:760px){
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .standfirst,.prose,.chapter-head{grid-column:1}
+  .byline{margin:20px 0 0}
+  .stat + .stat,.colophon .grid > div + div{margin-top:24px}
+  .chapter-head{margin-bottom:20px}
+}
+
+/* Caveats sit in the left column beside the prose they qualify, set smaller so they
+   read as secondary. */
+.aside{grid-column:1;grid-row:span 1;align-self:start;padding-top:14px;border-top:1px solid var(--rule);
+  font-size:.875rem;line-height:1.55;color:var(--ink-muted)}
+.aside h3{margin:0 0 8px;font-size:.95rem;font-weight:700;color:var(--ink)}
+.aside p{margin:0}
+@media (max-width:760px){.aside{grid-column:1;margin-bottom:24px}}
+
+/* The country picker that Vega-Lite adds under the convergence chart. */
+.vega-bindings{margin-top:14px;font-size:.9rem;color:var(--ink-muted)}
+.vega-bind-name{font-weight:600;color:var(--ink)}
+.vega-bindings select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--rule);
+  border-radius:4px;padding:4px 8px;margin-left:6px}
+
+/* Chart controls: the replay button and the country picker share one quiet style, so
+   they read as tools for the chart rather than as page navigation. */
+.control{margin-top:12px;font:inherit;font-size:.9rem;font-weight:600;color:var(--ink);
+  background:var(--bg);border:1px solid var(--rule);border-radius:4px;padding:5px 12px;cursor:pointer}
+.control:hover{border-color:var(--ink-muted)}
+.control:focus-visible,.vega-bindings select:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+.control[hidden]{display:none}
+
+/* Landing television (js/tv.js). The stage sticks to the window while the reader scrolls
+   through the extra height of .tv-hero, and the script turns that scroll into a zoom. Its
+   screen is filled with the page colour, so once it covers the window the story simply
+   continues on it. */
+.tv-hero{position:relative;height:230vh}
+.tv-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.tv{position:absolute;left:0;top:0;transform-origin:0 0;overflow:visible}
+.tv-body{fill:var(--tv-body)}
+.tv-bezel,.tv-leg,.tv-knob{fill:var(--tv-trim)}
+.tv-screen{fill:var(--bg)}
+.tv-antenna line{stroke:var(--tv-body);stroke-width:9;stroke-linecap:round}
+.tv-antenna circle,.tv-antenna path{fill:var(--tv-body)}
+.tv-knob{stroke:var(--tv-detail);stroke-width:4}
+.tv-mark,.tv-ticks,.tv-grille{stroke:var(--tv-detail);stroke-linecap:round}
+.tv-mark{stroke-width:7}
+.tv-ticks,.tv-grille{stroke-width:5;fill:none}
+.tv-card{position:absolute;left:0;top:0;width:calc(var(--screen-w, 480px) * .86);
+  text-align:center;will-change:transform}
+.tv-card .kicker{margin:0 0 .9em;font-size:max(.62rem, calc(var(--screen-w, 480px) * .022))}
+.tv-card h1{margin:0;font-size:calc(var(--screen-w, 480px) * .135)}
+.tv-hint{margin:1.4em 0 0;font-size:max(.75rem, calc(var(--screen-w, 480px) * .026));
+  font-weight:600;color:var(--ink-muted);opacity:calc(1 - 4 * var(--p, 0))}
+
+/* After the zoom, a thin bezel stays round the window: the reader is inside the set. It
+   never takes clicks, and it sits below chart tooltips. */
+.screen-frame{position:fixed;inset:10px;border-radius:20px;pointer-events:none;z-index:40;
+  opacity:0;box-shadow:0 0 0 40px var(--tv-body),inset 0 0 0 1px rgba(0,0,0,.18)}
+
+/* Reduced motion and ?capture: the set stands still and the landing is one screen high.
+   Capture mode uses a fixed height, because full-page screenshots stretch anything sized
+   to the window, and leaves the bezel out. */
+.tv-still .tv-hero{height:auto}
+.tv-still .tv-stage{position:relative}
+.tv-capture .tv-stage{height:780px}
+.tv-capture .screen-frame,.tv-capture .tv-hint{display:none}
+@media (max-width:760px){.screen-frame{inset:6px;border-radius:14px}}
+@media print{.screen-frame{display:none}.tv-hero{height:auto}.tv-stage{position:relative}}
+
+/* "Tune in" on the landing screen: the one filled button on the page, because it is the
+   first thing a reader can do. It fades out with the zoom. */
+.tv-tune{margin-top:1.6em;background:var(--ink);color:var(--bg);border-color:var(--ink);
+  font-size:max(.8rem, calc(var(--screen-w, 480px) * .03));padding:.45em 1.1em;
+  opacity:calc(1 - 4 * var(--p, 0))}
+.tv-tune:hover{background:var(--ink-muted);border-color:var(--ink-muted)}
+.tv-capture .tv-tune{display:none}
+
+/* Play buttons under the animated charts. The icon swaps to a stop square while a chart
+   plays, and the label counts through the years. */
+.play::before{content:"\25B6";display:inline-block;width:1.1em;font-size:.8em}
+.play[aria-pressed="true"]::before{content:"\25A0"}
+.play{font-variant-numeric:tabular-nums;min-width:11.5em;text-align:left}
+
+/* Player: the Play button beside a timeline of the years. The timeline is a range input
+   styled as a track that fills as the chart plays, with year labels underneath. */
+.player{display:flex;align-items:flex-start;gap:20px;margin-top:14px;max-width:760px}
+.player[hidden]{display:none}
+.player .control{margin-top:0;flex:none}
+.timeline{position:relative;flex:1;padding-top:8px}
+.timeline input{display:block;width:100%;margin:0;height:18px;background:transparent;cursor:pointer;
+  -webkit-appearance:none;appearance:none;--fill:100%}
+.timeline input::-webkit-slider-runnable-track{height:6px;border-radius:3px;
+  background:linear-gradient(to right,var(--viz-mark) var(--fill),var(--rule) var(--fill))}
+.timeline input::-moz-range-track{height:6px;border-radius:3px;
+  background:linear-gradient(to right,var(--viz-mark) var(--fill),var(--rule) var(--fill))}
+.timeline input::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-5px;
+  border-radius:50%;background:var(--bg);border:2px solid var(--ink)}
+.timeline input::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--bg);
+  border:2px solid var(--ink)}
+.timeline input:focus-visible{outline:2px solid var(--accent-text);outline-offset:4px;border-radius:4px}
+.ticks{position:relative;height:1.4em;margin-top:6px;font-size:.78rem;color:var(--ink-muted);
+  font-variant-numeric:tabular-nums}
+.ticks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.ticks .at-start{transform:none}
+.ticks .at-end{transform:translateX(-100%)}
+@media (max-width:760px){.player{flex-direction:column;gap:10px}.timeline{width:100%}}

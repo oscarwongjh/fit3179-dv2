@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Television Got Shorter</title>
+<meta name="author" content="Oscar Wong">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Radio+Canada:ital,wdth,wght@0,75..100,300..700;1,75..100,300..700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+
+<!-- Landing: a 1990s television. Scrolling zooms into its screen (js/tv.js); the screen
+     is the page colour, so the story carries on inside it. -->
+<header class="tv-hero">
+  <div class="tv-stage">
+    <svg class="tv" viewBox="0 0 1000 800" aria-hidden="true" focusable="false">
+      <g class="tv-antenna">
+        <line x1="470" y1="112" x2="330" y2="16"/>
+        <line x1="530" y1="112" x2="680" y2="10"/>
+        <circle cx="330" cy="16" r="10"/>
+        <circle cx="680" cy="10" r="10"/>
+        <path d="M436 118 a64 46 0 0 1 128 0 z"/>
+      </g>
+      <path class="tv-leg" d="M150 706 l-26 66 h58 l14 -66 z"/>
+      <path class="tv-leg" d="M850 706 l26 66 h-58 l-14 -66 z"/>
+      <rect class="tv-body" x="40" y="110" width="920" height="600" rx="52"/>
+      <rect class="tv-bezel" x="78" y="148" width="644" height="524" rx="40"/>
+      <rect class="tv-screen" x="100" y="170" width="600" height="480" rx="30"/>
+      <g class="tv-panel">
+        <circle class="tv-knob" cx="840" cy="250" r="50"/>
+        <line class="tv-mark" x1="840" y1="250" x2="840" y2="210"/>
+        <path class="tv-ticks" d="M840 192v-8M881 209l5.7-5.7M898 250h8M881 291l5.7 5.7M840 308v8M799 291l-5.7 5.7M782 250h-8M799 209l-5.7-5.7"/>
+        <circle class="tv-knob" cx="840" cy="392" r="38"/>
+        <line class="tv-mark" x1="840" y1="392" x2="864" y2="368"/>
+        <path class="tv-grille" d="M776 480h128M776 500h128M776 520h128M776 540h128M776 560h128M776 580h128M776 600h128M776 620h128M776 640h128"/>
+      </g>
+    </svg>
+    <div class="tv-card">
+      <p class="kicker">A data story about television since 1990</p>
+      <h1>Television Got Shorter</h1>
+      <button class="control tv-tune" type="button" hidden>Tune in <span aria-hidden="true">&darr;</span></button>
+    </div>
+  </div>
+</header>
+<div class="screen-frame" aria-hidden="true"></div>
+
+<div class="page">
+
+  <section class="masthead grid">
+    <p class="byline"><strong>Oscar Wong</strong><br>October 2026<br>Data from The Movie Database
+    and Netflix</p>
+    <p class="standfirst">Every country that makes television has cut the length of its
+    seasons. The places that ran longest fell furthest, and most of the world now makes
+    seasons of 6 to 12 episodes, close to the British habit of six.</p>
+  </section>
+
+  <section class="stats grid" aria-label="Key numbers">
+    <div class="stat">
+      <span class="stat-num">28 of 28</span>
+      <span class="stat-label">countries with enough data made shorter seasons after 2015
+      than before 2005</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num uk">6.0</span>
+      <span class="stat-label">episodes in a typical British season, in the 1990s, 2000s,
+      2010s and 2020s alike</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">85 to 10</span>
+      <span class="stat-label">episodes in a typical Mexican season, before 2005 and since
+      2015</span>
+    </div>
+  </section>
+
+  <section class="chapter grid" id="world">
+    <header class="chapter-head">
+      <p class="chapter-num">01</p>
+      <h2>Long seasons were a world habit</h2>
+    </header>
+    <div class="prose">
+      <p>Before 2005, how long a season ran depended on where it was made. A typical
+      Mexican series ran 85 episodes a season, an Indian one 42 and a Taiwanese one 40.
+      A typical British series ran six.</p>
+      <p>&ldquo;Typical&rdquo; here means the median. Line up a country&rsquo;s series from
+      the shortest season to the longest and take the one in the middle. A few soap operas
+      with hundreds of episodes would drag an average upward, but they barely move the
+      median.</p>
+    </div>
+    <figure class="figure"><div id="choropleth-eps"></div></figure>
+    <aside class="aside">
+      <h3>Why some countries are grey</h3>
+      <p>Grey does not mean a country makes no television. It means The Movie Database,
+      the volunteer-built catalogue behind these numbers, lists fewer than 10 of its series
+      for that period. That is true of most of Africa, Southeast Asia and the Middle East,
+      and of Malaysia, which has no listed series from before 2005 and 8 since 2015. Older
+      figures also rest on smaller samples: Mexico&rsquo;s 85 comes from 43 series, against
+      1,389 for the United States. Hong Kong qualifies but is too small to draw at this
+      scale.</p>
+    </aside>
+    <div class="prose">
+      <p>Since 2015 the map has paled. Every country shortened its seasons, and the
+      countries that ran longest cut the most. Of the 27 countries shown, 25 now sit
+      between 6 and 12 episodes. China, at 30, and T&uuml;rkiye, at 15, are the
+      exceptions, and both still fell.</p>
+      <p>The cartogram below puts before and after in one picture. Each country becomes a
+      circle, placed near its spot on the map and nudged so no two overlap. The outer ring
+      is its old season length and the filled circle is its new one, so the gap between
+      them is how much it cut. The <span class="uk">United Kingdom</span> is the one circle
+      that is nearly solid, because its seasons were already short.</p>
+    </div>
+    <figure class="figure">
+      <div id="dorling-eps-change"></div>
+      <div class="player" data-play="#dorling-eps-change" hidden>
+        <button class="control play" type="button">Play the change</button>
+      </div>
+    </figure>
+  </section>
+
+  <section class="chapter grid" id="years">
+    <header class="chapter-head">
+      <p class="chapter-num">02</p>
+      <h2>The long season faded year by year</h2>
+    </header>
+    <div class="prose">
+      <p>The maps compare two snapshots. The lines below fill in the years between. In
+      every large producer the line drifts down towards the British one, which barely
+      moves. American series went from a median of 17.5 episodes a season in the 1990s to
+      8 in the 2020s.</p>
+      <p>China is the clear exception. Its dramas still run about 30 episodes a season,
+      though that is down from more than 40.</p>
+    </div>
+    <figure class="figure">
+      <div id="lines-panels"></div>
+      <div class="player" data-play="#lines-panels" hidden>
+        <button class="control play" type="button">Play 1990 to 2025</button>
+      </div>
+    </figure>
+    <div class="prose">
+      <p>Pooling every country shows what replaced the long season. In 1990, one new series
+      in eight ran 21 to 26 episodes, the length of a full American network season. By
+      2025 it was one in 25.</p>
+      <p>The 7 to 10 episode season has been the most common length every year since 2015,
+      and the <span class="uk">British six</span> now makes up one new series in five.</p>
+    </div>
+    <figure class="figure"><div id="heatmap-season-bands"></div></figure>
+    <aside class="aside">
+      <h3>More series, more recently</h3>
+      <p>The Movie Database lists far more recent series than old ones. Each year in the
+      1990s rests on 160 to 294 series, and each year since 2020 on 1,413 to 1,937. That is
+      why these charts use shares and medians rather than counts.</p>
+    </aside>
+    <div class="prose">
+      <p>The United States shows the change most clearly. In the 1990s its new series
+      bunched at 13 and 22 episodes, the half and full seasons that American networks
+      ordered. By the 2020s the peaks had moved to 6, 8 and 10, on top of the British
+      shape.</p>
+    </div>
+    <figure class="figure"><div id="ridgeline-us-uk"></div></figure>
+    <aside class="aside">
+      <h3>Newcomers and old hands</h3>
+      <p>More countries reach 10 series in recent periods, from 17 in the late 1990s to 47
+      today, and most newcomers make short seasons. But the narrowing is not only about
+      newcomers: every one of the 28 countries measured in both eras shortened its
+      seasons.</p>
+    </aside>
+    <div class="prose">
+      <p>Countries did not only shorten their seasons. They came together. From 2000 to
+      2004, the middle half of countries ran between 13 and 28 episodes a season. From 2020
+      to 2025 they ran between 6.5 and 10. The <span class="uk">United Kingdom</span> sat
+      at six throughout, and the rest of the world moved towards it.</p>
+    </div>
+    <figure class="figure">
+      <div id="boxplot-convergence"></div>
+      <div class="player" data-play="#boxplot-convergence" hidden>
+        <button class="control play" type="button">Play 1995 to 2025</button>
+      </div>
+    </figure>
+  </section>
+
+  <section class="chapter grid" id="chances">
+    <header class="chapter-head">
+      <p class="chapter-num">03</p>
+      <h2>Fewer launches in autumn, fewer second chances</h2>
+    </header>
+    <div class="prose">
+      <p>The season shrank in another sense too. American networks used to launch their new
+      shows together each September. In the 1990s, 38% of new American series premiered in
+      that one month. In the 2020s, 10% did, about the same as most other months.</p>
+    </div>
+    <figure class="figure"><div id="radial-premiere-month"></div></figure>
+    <aside class="aside">
+      <h3>What counts as renewed</h3>
+      <p>A series counts as renewed when The Movie Database lists two or more seasons for
+      it. Miniseries are left out, because they are made to end after one season and their
+      share of new series has grown.</p>
+    </aside>
+    <div class="prose">
+      <p>Fewer series now get to continue. Of the series that premiered in 2010, 57 in every
+      100 came back for a second season. Of those from 2022, 36 did.</p>
+      <p>The 2022 group has had the least time, so a few more may still return. But the 2019
+      group has had six years and sits at 45.</p>
+    </div>
+    <figure class="figure"><div id="waffle-renewal"></div></figure>
+  </section>
+
+  <section class="chapter grid" id="malaysia">
+    <header class="chapter-head">
+      <p class="chapter-num">04</p>
+      <h2>What Malaysia watches</h2>
+    </header>
+    <div class="prose">
+      <p>So far this is a story about what gets made. Netflix&rsquo;s weekly Top 10 for
+      Malaysia shows what people here actually watch. Between July 2021 and October 2026,
+      635 series made the list, and 624 of them were matched to The Movie Database to find
+      where each was made and how long its seasons run.</p>
+      <p>South Korea leads by far. Korean series filled 47% of all the weeks in
+      Malaysia&rsquo;s Top 10, nearly three times the American share.</p>
+    </div>
+    <figure class="figure">
+      <div id="flowmap-malaysia"></div>
+      <div class="player" data-play="#flowmap-malaysia" hidden>
+        <button class="control play" type="button">Play 2021 to 2026</button>
+      </div>
+    </figure>
+    <aside class="aside">
+      <h3>About the Netflix data</h3>
+      <p>Netflix publishes a Top 10 of series for each country every week. Each week a show
+      spends on the list counts once, whatever its rank. Eleven series could not be matched
+      and are left out; they account for 15 of 2,750 weeks. On the map, a series made by
+      several countries is split evenly between them.</p>
+    </aside>
+    <div class="prose">
+      <p>Malaysian series came fourth overall, with 8% of all weeks, led by the animated
+      <i>BoBoiBoy Galaxy</i>, <i>Mechamato</i> and <i>Upin &amp; Ipin</i>. They have
+      climbed, from sixth place in 2021 to fourth in every year since 2024.</p>
+    </div>
+    <figure class="figure"><div id="bump-malaysia"></div></figure>
+    <aside class="aside">
+      <h3>Reading the rows</h3>
+      <p>Each series sits in the row of the first country The Movie Database lists for it.
+      The database records some long anime as a single season, which is why a few circles
+      reach past 40.</p>
+    </aside>
+    <div class="prose">
+      <p>The series Malaysians choose are short too, if not as short as British ones.
+      Korean and Japanese series in the Top 10 have a median of 12 episodes a season,
+      Malaysian ones 10 and American ones 8. British series, at six, are the shortest.
+      Eleven pass 40 episodes a season, most of them anime and children&rsquo;s shows.</p>
+    </div>
+    <figure class="figure"><div id="beeswarm-malaysia"></div></figure>
+  </section>
+
+  <section class="chapter grid" id="ending">
+    <header class="chapter-head">
+      <p class="chapter-num">05</p>
+      <h2>The odd one out became the norm</h2>
+    </header>
+    <div class="prose">
+      <p>In 1990 the six-episode British series looked strange next to a 22-episode American
+      season or a Mexican drama that ran for months. Thirty-five years later, most of the
+      world makes seasons of 6 to 12 episodes, and the shows Malaysians watch most sit in
+      the same range.</p>
+      <p>Viewers get shorter stories and fewer of them come back. The British habit of making
+      a few episodes, then stopping, is now how most television is made.</p>
+    </div>
+  </section>
+
+  <footer class="colophon">
+    <div class="grid">
+      <div>
+        <h2>Data</h2>
+        <p>Series, seasons and episodes: <a href="https://www.themoviedb.org/">The Movie
+        Database (TMDB)</a> API, retrieved October 2026. This product uses the TMDB API but
+        is not endorsed or certified by TMDB.</p>
+        <p>What Malaysia watches: <a href="https://www.netflix.com/tudum/top10">Netflix
+        Top 10</a>, weekly lists of series for Malaysia from 4 July 2021 to 4 October 2026,
+        retrieved October 2026.</p>
+        <p>Country outlines: <a href="https://www.naturalearthdata.com/">Natural Earth</a>,
+        via the <a href="https://github.com/topojson/world-atlas">world-atlas</a> package.</p>
+      </div>
+      <div>
+        <h2>Method</h2>
+        <p>Episodes per season is a series&rsquo; episode count divided by its season count.
+        Series first aired from 1990 to 2025 are used. Series averaging more than 100
+        episodes a season, such as daily soaps, talk shows and news, are left out; they are
+        the longest and mostly old, so leaving them out makes the fall look smaller, not
+        larger.</p>
+        <p>Each country&rsquo;s figure is the median across the series it made, and a
+        co-production counts for every country involved. A country is shown only when TMDB
+        lists at least 10 of its series in that period. Netflix titles were matched to TMDB
+        by name and air date.</p>
+      </div>
+      <div>
+        <h2>About</h2>
+        <p>By Oscar Wong for FIT3179 Data Visualisation, Monash University Malaysia,
+        October 2026. Charts built with Vega-Lite and Vega. Typeface: Radio Canada.</p>
+        <p>AI use: Claude (Anthropic) helped write the chart code, page layout and draft
+        text. The data, analysis choices and final wording were checked by the author.</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+<script src="js/tv.js"></script>
+<script src="js/charts.js"></script>
+</body>
+</html>

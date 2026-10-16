@@ -1,0 +1,231 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Waffle charts. Each grid is 100 squares standing for the series that premiered in one year, miniseries excluded. Filled squares are the series that went on to a second season; the rest ended after one.",
+  "title": {
+    "text": "Fewer shows get a second season",
+    "subtitle": [
+      "Out of every 100 new series that premiered in each year, how many came back for a second",
+      "season. Miniseries, which are made to end after one, are left out."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "params": [
+    {
+      "name": "mark",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "markSoft",
+      "value": "#dbe5f0"
+    },
+    {
+      "name": "ink",
+      "value": "#231c14"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    }
+  ],
+  "data": {
+    "url": "data/renewal_by_cohort.csv",
+    "format": {
+      "parse": {
+        "cohort": "number",
+        "per100": "number",
+        "n": "number",
+        "renewed": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "sequence(0, 100)",
+      "as": "cell"
+    },
+    {
+      "flatten": [
+        "cell"
+      ]
+    },
+    {
+      "calculate": "datum.cell % 10",
+      "as": "col"
+    },
+    {
+      "calculate": "floor(datum.cell / 10)",
+      "as": "row"
+    },
+    {
+      "calculate": "datum.cell < datum.per100 ? 'Came back for a second season' : 'Ended after one season'",
+      "as": "fate"
+    },
+    {
+      "calculate": "'Premiered in ' + datum.cohort",
+      "as": "panel"
+    }
+  ],
+  "facet": {
+    "column": {
+      "field": "panel",
+      "type": "nominal",
+      "header": {
+        "title": null,
+        "labelAnchor": "start",
+        "labelFontSize": 14,
+        "labelFontWeight": 600,
+        "labelPadding": 6
+      }
+    }
+  },
+  "spacing": 52,
+  "spec": {
+    "width": 206,
+    "height": 206,
+    "layer": [
+      {
+        "mark": {
+          "type": "rect",
+          "cornerRadius": 2
+        },
+        "encoding": {
+          "x": {
+            "field": "col",
+            "type": "ordinal",
+            "axis": null,
+            "scale": {
+              "paddingInner": 0.14
+            }
+          },
+          "y": {
+            "field": "row",
+            "type": "ordinal",
+            "axis": null,
+            "sort": "descending",
+            "scale": {
+              "paddingInner": 0.14
+            }
+          },
+          "color": {
+            "field": "fate",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Came back for a second season",
+                "Ended after one season"
+              ],
+              "range": [
+                {
+                  "expr": "mark"
+                },
+                {
+                  "expr": "markSoft"
+                }
+              ]
+            },
+            "legend": {
+              "title": null,
+              "orient": "top",
+              "direction": "horizontal",
+              "labelFontSize": 13,
+              "symbolType": "square",
+              "symbolSize": 180,
+              "offset": 10,
+              "labelLimit": 320
+            }
+          },
+          "tooltip": [
+            {
+              "field": "panel",
+              "title": "Group"
+            },
+            {
+              "field": "per100",
+              "title": "Back for a second season, per 100"
+            },
+            {
+              "field": "renewed",
+              "title": "Series renewed"
+            },
+            {
+              "field": "n",
+              "title": "Series in the group"
+            }
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "datum.cell === 0"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "baseline": "top",
+          "fontSize": 30,
+          "fontWeight": 700,
+          "dy": 14,
+          "x": 0
+        },
+        "encoding": {
+          "y": {
+            "value": 206
+          },
+          "text": {
+            "field": "per100"
+          },
+          "color": {
+            "value": {
+              "expr": "ink"
+            }
+          }
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "datum.cell === 0"
+          },
+          {
+            "calculate": "datum.cohort === 2022 ? ['came back; this group', 'has had the least time'] : ['came back for', 'a second season']",
+            "as": "caption"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "baseline": "top",
+          "fontSize": 12,
+          "lineHeight": 15,
+          "dy": 18,
+          "x": 50
+        },
+        "encoding": {
+          "y": {
+            "value": 206
+          },
+          "text": {
+            "field": "caption"
+          },
+          "color": {
+            "value": {
+              "expr": "inkMuted"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "padding": 0,
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  },
+  "bounds": "flush"
+}

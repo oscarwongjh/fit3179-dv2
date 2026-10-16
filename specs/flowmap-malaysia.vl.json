@@ -1,0 +1,504 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Flow map on an azimuthal equidistant projection centred on Kuala Lumpur. On this projection every straight line from the centre is the shortest route over the globe and its length is the true distance, so each flow is drawn as a straight line from the country where the shows were made. Line width is that country's share of all weeks in Malaysia's Netflix Top 10 for TV, July 2021 to October 2026, or of one year's weeks while the Play button steps through the years. Malaysia's own shows are the circle at the centre.",
+  "title": {
+    "text": "Where Malaysia's favourite series come from",
+    "subtitle": [
+      "Share of the weeks in Malaysia's Netflix Top 10 for TV, July 2021 to October 2026, by the country",
+      "each series was made in. Lines run to Kuala Lumpur along the shortest route, at their true length.",
+      "Press Play, or drag the timeline, to move through the years."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "params": [
+    {
+      "name": "mark",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "markSoft",
+      "value": "#dbe5f0"
+    },
+    {
+      "name": "accent",
+      "value": "#d9601f"
+    },
+    {
+      "name": "noData",
+      "value": "#e6dccb"
+    },
+    {
+      "name": "border",
+      "value": "#f5efe2"
+    },
+    {
+      "name": "ink",
+      "value": "#231c14"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    },
+    {
+      "name": "halo",
+      "value": "#1d3f6b"
+    },
+    {
+      "name": "yearPos",
+      "value": 6,
+      "description": "Where on the timeline the map is: 0 is 2021, 5 is 2026 and 6 is all years. In between, each country's share is interpolated, so line widths change smoothly. js/charts.js moves it when the reader presses Play or drags the timeline; the default shows all years."
+    }
+  ],
+  "width": 1040,
+  "height": 600,
+  "projection": {
+    "type": "azimuthalEquidistant",
+    "rotate": [
+      -101.7,
+      -3.1
+    ],
+    "clipAngle": 152
+  },
+  "layer": [
+    {
+      "data": {
+        "sphere": true
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": {
+          "expr": "border"
+        },
+        "stroke": {
+          "expr": "noData"
+        },
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "data/world-110m.json",
+        "format": {
+          "type": "topojson",
+          "feature": "countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": {
+          "expr": "noData"
+        },
+        "stroke": {
+          "expr": "border"
+        },
+        "strokeWidth": 0.4
+      }
+    },
+    {
+      "data": {
+        "url": "data/netflix_my_origin.csv"
+      },
+      "transform": [
+        {
+          "pivot": "period",
+          "value": "share",
+          "groupby": [
+            "iso",
+            "name",
+            "lat",
+            "lon"
+          ]
+        },
+        {
+          "calculate": "datum[['2021','2022','2023','2024','2025','2026','all'][min(floor(yearPos), 6)]] * (1 - (yearPos - min(floor(yearPos), 6))) + datum[['2021','2022','2023','2024','2025','2026','all'][min(floor(yearPos) + 1, 6)]] * (yearPos - min(floor(yearPos), 6))",
+          "as": "share"
+        },
+        {
+          "filter": "datum.iso !== 'MY'"
+        },
+        {
+          "calculate": "101.7",
+          "as": "kl_lon"
+        },
+        {
+          "calculate": "3.1",
+          "as": "kl_lat"
+        },
+        {
+          "calculate": "datum.iso === 'GB' ? 'United Kingdom' : 'Other countries'",
+          "as": "role"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "strokeCap": "round",
+        "opacity": 0.85
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "longitude2": {
+          "field": "kl_lon"
+        },
+        "latitude2": {
+          "field": "kl_lat"
+        },
+        "strokeWidth": {
+          "field": "share",
+          "type": "quantitative",
+          "scale": {
+            "type": "linear",
+            "domain": [
+              0,
+              0.6
+            ],
+            "range": [
+              0.8,
+              26
+            ]
+          },
+          "legend": {
+            "title": "Share of Top 10 weeks",
+            "orient": "bottom-left",
+            "values": [
+              0.05,
+              0.2,
+              0.5
+            ],
+            "format": ".0%",
+            "labelFontSize": 12,
+            "titleFontSize": 12,
+            "symbolType": "stroke",
+            "symbolStrokeColor": {
+              "expr": "mark"
+            },
+            "direction": "vertical",
+            "rowPadding": 8
+          }
+        },
+        "color": {
+          "condition": {
+            "test": "datum.iso === 'GB'",
+            "value": {
+              "expr": "accent"
+            }
+          },
+          "value": {
+            "expr": "mark"
+          }
+        },
+        "order": {
+          "field": "share",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "title": "Made in"
+          },
+          {
+            "field": "share",
+            "title": "Share of Top 10 weeks",
+            "format": ".1%"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/netflix_my_origin.csv"
+      },
+      "transform": [
+        {
+          "pivot": "period",
+          "value": "share",
+          "groupby": [
+            "iso",
+            "name",
+            "lat",
+            "lon"
+          ]
+        },
+        {
+          "calculate": "datum[['2021','2022','2023','2024','2025','2026','all'][min(floor(yearPos), 6)]] * (1 - (yearPos - min(floor(yearPos), 6))) + datum[['2021','2022','2023','2024','2025','2026','all'][min(floor(yearPos) + 1, 6)]] * (yearPos - min(floor(yearPos), 6))",
+          "as": "share"
+        },
+        {
+          "filter": "datum.iso === 'MY'"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "opacity": 1,
+        "stroke": {
+          "expr": "border"
+        },
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "size": {
+          "value": 900
+        },
+        "color": {
+          "value": {
+            "expr": "halo"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "title": "Made in"
+          },
+          {
+            "field": "share",
+            "title": "Share of Top 10 weeks",
+            "format": ".1%"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/netflix_my_origin.csv"
+      },
+      "transform": [
+        {
+          "pivot": "period",
+          "value": "share",
+          "groupby": [
+            "iso",
+            "name",
+            "lat",
+            "lon"
+          ]
+        },
+        {
+          "calculate": "datum[['2021','2022','2023','2024','2025','2026','all'][min(floor(yearPos), 6)]] * (1 - (yearPos - min(floor(yearPos), 6))) + datum[['2021','2022','2023','2024','2025','2026','all'][min(floor(yearPos) + 1, 6)]] * (yearPos - min(floor(yearPos), 6))",
+          "as": "share"
+        },
+        {
+          "filter": "indexof(['KR', 'JP', 'US', 'GB', 'MY'], datum.iso) >= 0"
+        },
+        {
+          "calculate": "datum.iso === 'MY' ? 'Made in Malaysia, ' + format(datum.share, '.0%') : datum.name + ', ' + format(datum.share, '.0%')",
+          "as": "label"
+        },
+        {
+          "calculate": "datum.iso === 'KR' ? 47 : datum.iso === 'JP' ? 33 : datum.lat",
+          "as": "label_lat"
+        },
+        {
+          "calculate": "datum.iso === 'KR' || datum.iso === 'JP' ? 152 : datum.lon",
+          "as": "label_lon"
+        }
+      ],
+      "layer": [
+        {
+          "transform": [
+            {
+              "filter": "datum.iso === 'KR' || datum.iso === 'JP'"
+            }
+          ],
+          "mark": {
+            "type": "rule",
+            "strokeWidth": 1,
+            "color": {
+              "expr": "inkMuted"
+            }
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "longitude2": {
+              "field": "label_lon"
+            },
+            "latitude2": {
+              "field": "label_lat"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 13,
+            "fontWeight": 600,
+            "align": "left",
+            "dx": {
+              "expr": "datum.iso === 'MY' ? 22 : datum.iso === 'US' || datum.iso === 'GB' ? 10 : 4"
+            },
+            "dy": {
+              "expr": "datum.iso === 'MY' ? 0 : datum.iso === 'US' || datum.iso === 'GB' ? -12 : 0"
+            },
+            "baseline": "middle"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "label_lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "label_lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "label"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.iso === 'GB'",
+                "value": {
+                  "expr": "accent"
+                }
+              },
+              "value": {
+                "expr": "ink"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "note": [
+              "Korean series filled almost half",
+              "of all weeks in the Top 10,",
+              "nearly three times as many",
+              "as American ones. Japan, mostly",
+              "anime, came third.",
+              "",
+              "The thinner lines, from Thailand,",
+              "China, Spain, India and others,",
+              "hold 2% or less each."
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 12,
+        "lineHeight": 16,
+        "x": 850,
+        "y": 240
+      },
+      "encoding": {
+        "text": {
+          "field": "note"
+        },
+        "color": {
+          "value": {
+            "expr": "inkMuted"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "yearPos >= 5.999"
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "transform": [
+        {
+          "filter": "yearPos < 5.5"
+        },
+        {
+          "calculate": "'' + (2021 + round(yearPos))",
+          "as": "yr"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 64,
+        "fontWeight": 700,
+        "x": 850,
+        "y": 230
+      },
+      "encoding": {
+        "text": {
+          "field": "yr"
+        },
+        "color": {
+          "value": {
+            "expr": "inkMuted"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "transform": [
+        {
+          "filter": "yearPos < 5.5"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 12,
+        "lineHeight": 16,
+        "x": 852,
+        "y": 304
+      },
+      "encoding": {
+        "text": {
+          "value": [
+            "Share of that year's weeks.",
+            "2021 starts in July and",
+            "2026 ends in early October."
+          ]
+        },
+        "color": {
+          "value": {
+            "expr": "inkMuted"
+          }
+        }
+      }
+    }
+  ],
+  "padding": 0,
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

@@ -1,0 +1,55 @@
+iso,name,med,n,period,topo_id
+AR,Argentina,13.0,15,pre-2005,032
+AR,Argentina,8.0,120,2015+,032
+AT,Austria,9.6,12,pre-2005,040
+AT,Austria,6.0,26,2015+,040
+AU,Australia,16.8,82,pre-2005,036
+AU,Australia,7.0,251,2015+,036
+BE,Belgium,13.0,28,pre-2005,056
+BE,Belgium,8.0,100,2015+,056
+BR,Brazil,27.4,54,pre-2005,076
+BR,Brazil,8.0,229,2015+,076
+CA,Canada,17.8,282,pre-2005,124
+CA,Canada,10.0,296,2015+,124
+CN,China,36.0,54,pre-2005,156
+CN,China,30.0,1043,2015+,156
+DE,Germany,14.3,109,pre-2005,276
+DE,Germany,6.0,353,2015+,276
+DK,Denmark,10.6,27,pre-2005,208
+DK,Denmark,8.0,89,2015+,208
+ES,Spain,15.5,53,pre-2005,724
+ES,Spain,7.0,479,2015+,724
+FI,Finland,8.5,22,pre-2005,246
+FI,Finland,7.2,52,2015+,246
+FR,France,20.7,143,pre-2005,250
+FR,France,6.0,509,2015+,250
+GB,United Kingdom,6.2,635,pre-2005,826
+GB,United Kingdom,6.0,1485,2015+,826
+GR,Greece,29.5,43,pre-2005,300
+GR,Greece,11.2,24,2015+,300
+IN,India,42.0,16,pre-2005,356
+IN,India,8.0,322,2015+,356
+IT,Italy,8.0,57,pre-2005,380
+IT,Italy,7.0,268,2015+,380
+JP,Japan,16.0,693,pre-2005,392
+JP,Japan,12.0,2334,2015+,392
+KR,South Korea,20.0,44,pre-2005,410
+KR,South Korea,12.0,1322,2015+,410
+MX,Mexico,85.0,43,pre-2005,484
+MX,Mexico,10.0,361,2015+,484
+NL,Netherlands,12.9,22,pre-2005,528
+NL,Netherlands,8.0,83,2015+,528
+NO,Norway,11.5,20,pre-2005,578
+NO,Norway,8.0,94,2015+,578
+PL,Poland,15.0,22,pre-2005,616
+PL,Poland,8.0,116,2015+,616
+RU,Russia,13.0,47,pre-2005,643
+RU,Russia,9.0,373,2015+,643
+SE,Sweden,8.0,57,pre-2005,752
+SE,Sweden,6.6,138,2015+,752
+TR,Türkiye,27.0,51,pre-2005,792
+TR,Türkiye,15.0,340,2015+,792
+TW,Taiwan,40.0,17,pre-2005,158
+TW,Taiwan,12.0,123,2015+,158
+US,United States,15.7,1389,pre-2005,840
+US,United States,8.2,4319,2015+,840

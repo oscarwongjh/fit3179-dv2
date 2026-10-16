@@ -1,0 +1,562 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Dorling cartogram. Each country is a circle whose area is proportional to its median episodes per season: the outer ring is before 2005, the filled circle is 2015 onward. Circles start at the country centroid and a force layout pushes them apart so none overlap.",
+  "width": 1040,
+  "height": 520,
+  "padding": 0,
+  "autosize": "pad",
+  "title": {
+    "text": "Every circle shrank, and the big ones shrank most",
+    "subtitle": [
+      "Circle area shows median episodes per season. The ring is before 2005;",
+      "the filled circle inside it is 2015 onward. Hover a circle for the numbers."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "signals": [
+    {
+      "name": "k",
+      "value": 7.5,
+      "description": "Pixels of radius per square root of an episode, so circle area, not radius, is proportional to episodes."
+    },
+    {
+      "name": "progress",
+      "value": 1,
+      "description": "How far each filled circle has shrunk, from 0 (drawn at the old season length) to 1 (the new one). js/charts.js animates it from 0 to 1 once, when the chart first scrolls into view; on its own the spec shows the finished state."
+    },
+    {
+      "name": "mark",
+      "value": "#3d6aa3",
+      "description": "Colours default to the light scheme; js/charts.js replaces them from css/style.css."
+    },
+    {
+      "name": "markSoft",
+      "value": "#dbe5f0"
+    },
+    {
+      "name": "accent",
+      "value": "#d9601f"
+    },
+    {
+      "name": "halo",
+      "value": "#1d3f6b"
+    },
+    {
+      "name": "accentHalo",
+      "value": "#7a2e0c"
+    },
+    {
+      "name": "ink",
+      "value": "#231c14"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    },
+    {
+      "name": "hover",
+      "value": null,
+      "on": [
+        {
+          "events": "@outer:mouseover, @inner:mouseover, @label:mouseover",
+          "update": "datum.iso"
+        },
+        {
+          "events": "@outer:mouseout, @inner:mouseout, @label:mouseout",
+          "update": "null"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "world",
+      "url": "data/world-110m.json",
+      "format": {
+        "type": "topojson",
+        "feature": "countries"
+      },
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.properties.name !== 'Antarctica'"
+        }
+      ]
+    },
+    {
+      "name": "countries",
+      "url": "data/eps_change_by_country.csv",
+      "format": {
+        "type": "csv",
+        "parse": "auto"
+      },
+      "transform": [
+        {
+          "type": "geopoint",
+          "projection": "proj",
+          "fields": [
+            "lon",
+            "lat"
+          ],
+          "as": [
+            "cx",
+            "cy"
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "k * sqrt(datum.then)",
+          "as": "r_then"
+        },
+        {
+          "type": "formula",
+          "expr": "k * sqrt(datum.now)",
+          "as": "r_now"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cx",
+          "as": "x"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cy",
+          "as": "y"
+        },
+        {
+          "type": "force",
+          "static": true,
+          "iterations": 400,
+          "forces": [
+            {
+              "force": "collide",
+              "radius": {
+                "expr": "datum.r_then + 2"
+              },
+              "iterations": 3
+            },
+            {
+              "force": "x",
+              "x": "cx",
+              "strength": 0.2
+            },
+            {
+              "force": "y",
+              "y": "cy",
+              "strength": 0.2
+            }
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.r_then * 2 - 6 >= length(datum.name) * 6 ? datum.name : datum.abbr",
+          "as": "label"
+        }
+      ]
+    },
+    {
+      "name": "notes",
+      "source": "countries",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "indexof(['MX', 'GB', 'IN'], datum.iso) >= 0"
+        },
+        {
+          "type": "formula",
+          "as": "note",
+          "expr": "datum.iso === 'MX' ? ['Mexico: 85 episodes a season', 'before 2005, 10 since 2015.', 'The biggest fall of the 27,', 'from only 43 older series.'] : datum.iso === 'GB' ? 'United Kingdom: 6.2, then 6.0. Almost no change.' : ['India: 42, then 8.', 'The second-biggest fall.']"
+        },
+        {
+          "type": "formula",
+          "as": "nx",
+          "expr": "datum.iso === 'MX' ? 0 : datum.iso === 'GB' ? datum.x - datum.r_then - 30 : datum.x"
+        },
+        {
+          "type": "formula",
+          "as": "ny",
+          "expr": "datum.iso === 'MX' ? datum.y - datum.r_then - 74 : datum.iso === 'GB' ? datum.y - 85 : datum.y + datum.r_then + 10"
+        },
+        {
+          "type": "formula",
+          "as": "nalign",
+          "expr": "datum.iso === 'GB' ? 'right' : datum.iso === 'MX' ? 'left' : 'center'"
+        },
+        {
+          "type": "formula",
+          "as": "nbase",
+          "expr": "'top'"
+        }
+      ]
+    }
+  ],
+  "projections": [
+    {
+      "name": "proj",
+      "type": "equalEarth",
+      "fit": {
+        "signal": "data('world')"
+      },
+      "size": {
+        "signal": "[width, height]"
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "area",
+      "type": "linear",
+      "domain": [
+        0,
+        100
+      ],
+      "range": [
+        0,
+        {
+          "signal": "4 * k * k * 100"
+        }
+      ],
+      "zero": true
+    },
+    {
+      "name": "era",
+      "type": "ordinal",
+      "domain": [
+        "Before 2005 (ring)",
+        "2015 onward (filled)",
+        "United Kingdom, 2015 onward"
+      ],
+      "range": {
+        "signal": "[markSoft, mark, accent]"
+      }
+    }
+  ],
+  "legends": [
+    {
+      "fill": "era",
+      "orient": "none",
+      "legendX": 0,
+      "legendY": {
+        "signal": "height - 230"
+      },
+      "direction": "vertical",
+      "title": "Period",
+      "symbolType": "circle",
+      "symbolSize": 160,
+      "labelFontSize": 12,
+      "titleFontSize": 13,
+      "encode": {
+        "symbols": {
+          "update": {
+            "stroke": {
+              "signal": "datum.value === 'Before 2005 (ring)' ? mark : null"
+            },
+            "strokeWidth": {
+              "value": 1
+            }
+          }
+        }
+      },
+      "rowPadding": 6,
+      "labelLimit": 260
+    },
+    {
+      "size": "area",
+      "orient": "none",
+      "legendX": 0,
+      "legendY": {
+        "signal": "height - 120"
+      },
+      "direction": "horizontal",
+      "title": "Median episodes per season",
+      "values": [
+        6,
+        20,
+        40
+      ],
+      "symbolType": "circle",
+      "symbolFillColor": "transparent",
+      "labelFontSize": 12,
+      "titleFontSize": 13,
+      "columnPadding": 8,
+      "encode": {
+        "symbols": {
+          "update": {
+            "stroke": {
+              "signal": "inkMuted"
+            },
+            "strokeWidth": {
+              "value": 1
+            }
+          }
+        }
+      }
+    }
+  ],
+  "marks": [
+    {
+      "name": "outer",
+      "type": "symbol",
+      "from": {
+        "data": "countries"
+      },
+      "encode": {
+        "enter": {
+          "shape": {
+            "value": "circle"
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "field": "y"
+          },
+          "size": {
+            "scale": "area",
+            "field": "then"
+          },
+          "fill": {
+            "signal": "markSoft"
+          },
+          "stroke": {
+            "signal": "datum.iso === 'GB' ? accent : mark"
+          },
+          "strokeWidth": {
+            "signal": "hover === datum.iso ? 2.5 : 1"
+          },
+          "tooltip": {
+            "signal": "{title: datum.name, 'Before 2005': format(datum.then, '.1f') + ' episodes (' + datum.n_then + ' series)', '2015 onward': format(datum.now, '.1f') + ' episodes (' + datum.n_now + ' series)', 'Change': format(abs(datum.pct), 'd') + '% shorter'}"
+          }
+        }
+      }
+    },
+    {
+      "name": "inner",
+      "type": "symbol",
+      "from": {
+        "data": "countries"
+      },
+      "encode": {
+        "enter": {
+          "shape": {
+            "value": "circle"
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "field": "y"
+          },
+          "size": {
+            "signal": "scale('area', datum.then + (datum.now - datum.then) * progress)"
+          },
+          "fill": {
+            "signal": "datum.iso === 'GB' ? accent : mark"
+          },
+          "tooltip": {
+            "signal": "{title: datum.name, 'Before 2005': format(datum.then, '.1f') + ' episodes (' + datum.n_then + ' series)', '2015 onward': format(datum.now, '.1f') + ' episodes (' + datum.n_now + ' series)', 'Change': format(abs(datum.pct), 'd') + '% shorter'}"
+          }
+        }
+      }
+    },
+    {
+      "name": "labelHalo",
+      "type": "text",
+      "from": {
+        "data": "countries"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "field": "y"
+          },
+          "text": {
+            "field": "label"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fontSize": {
+            "value": 11
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fill": {
+            "signal": "datum.iso === 'GB' ? accentHalo : halo"
+          },
+          "stroke": {
+            "signal": "datum.iso === 'GB' ? accentHalo : halo"
+          },
+          "strokeWidth": {
+            "value": 2.5
+          },
+          "strokeJoin": {
+            "value": "round"
+          }
+        }
+      }
+    },
+    {
+      "name": "label",
+      "type": "text",
+      "from": {
+        "data": "countries"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "field": "y"
+          },
+          "text": {
+            "field": "label"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fontSize": {
+            "value": 11
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "fill": {
+            "value": "#ffffff"
+          },
+          "tooltip": {
+            "signal": "{title: datum.name, 'Before 2005': format(datum.then, '.1f') + ' episodes (' + datum.n_then + ' series)', '2015 onward': format(datum.now, '.1f') + ' episodes (' + datum.n_now + ' series)', 'Change': format(abs(datum.pct), 'd') + '% shorter'}"
+          }
+        }
+      }
+    },
+    {
+      "name": "leader",
+      "type": "rule",
+      "interactive": false,
+      "from": {
+        "data": "notes"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.nx + 4"
+          },
+          "y": {
+            "signal": "datum.ny + 9"
+          },
+          "x2": {
+            "signal": "datum.x - datum.r_then * 0.72"
+          },
+          "y2": {
+            "signal": "datum.y - datum.r_then * 0.72"
+          },
+          "stroke": {
+            "signal": "inkMuted"
+          },
+          "strokeWidth": {
+            "value": 1
+          },
+          "opacity": {
+            "signal": "datum.iso === 'GB' ? 1 : 0"
+          }
+        }
+      }
+    },
+    {
+      "name": "annotation",
+      "type": "text",
+      "from": {
+        "data": "notes"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "field": "nx"
+          },
+          "y": {
+            "field": "ny"
+          },
+          "text": {
+            "field": "note"
+          },
+          "align": {
+            "field": "nalign"
+          },
+          "baseline": {
+            "field": "nbase"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "lineHeight": {
+            "value": 16
+          },
+          "fill": {
+            "signal": "inkMuted"
+          }
+        }
+      }
+    },
+    {
+      "name": "coverageNote",
+      "type": "text",
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "width * 0.55"
+          },
+          "y": {
+            "signal": "height * 0.78"
+          },
+          "text": {
+            "value": [
+              "No circle means too few series to measure.",
+              "Africa, Southeast Asia and most of the",
+              "Middle East are missing for that reason."
+            ]
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "lineHeight": {
+            "value": 16
+          },
+          "fontStyle": {
+            "value": "italic"
+          },
+          "fill": {
+            "signal": "inkMuted"
+          }
+        }
+      }
+    }
+  ]
+}

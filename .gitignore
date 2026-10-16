@@ -1,0 +1,12 @@
+.env
+.DS_Store
+node_modules/
+
+# Working handoff notes, not part of the submission.
+HANDOFF.md
+
+# Course material and raw data, never publish (contains .env with API key).
+FIT3179/
+
+# Python bytecode from scripts/build_data.py.
+__pycache__/

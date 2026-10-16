@@ -1,0 +1,287 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Small multiples. For eight large producers, the median episodes per season of series first aired around each year, drawn against the United Kingdom's line in every panel.",
+  "title": {
+    "text": "Eight big producers, one direction",
+    "subtitle": [
+      "Median episodes per season of series first aired in each year and the years either side.",
+      "Each country in blue; the United Kingdom, repeated in every panel, in orange."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "params": [
+    {
+      "name": "mark",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "accent",
+      "value": "#d9601f"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    },
+    {
+      "name": "border",
+      "value": "#f5efe2"
+    },
+    {
+      "name": "cut",
+      "value": 2025,
+      "description": "How far the lines are drawn, as a year with fractions. A curtain in the page colour covers everything after it, so the lines draw on smoothly. js/charts.js moves it when the reader presses Play or drags the timeline; the default draws every year."
+    }
+  ],
+  "data": {
+    "url": "data/eps_yearly_panels.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.iso === 'GB' ? 'United Kingdom' : 'The country named above'",
+      "as": "role"
+    }
+  ],
+  "facet": {
+    "field": "panel",
+    "type": "nominal",
+    "sort": [
+      "United States",
+      "Japan",
+      "South Korea",
+      "China",
+      "France",
+      "Germany",
+      "Canada",
+      "Australia"
+    ],
+    "header": {
+      "title": null,
+      "labelAnchor": "start",
+      "labelFontSize": 14,
+      "labelFontWeight": 600,
+      "labelPadding": 6
+    }
+  },
+  "spacing": {
+    "row": 30,
+    "column": 30
+  },
+  "spec": {
+    "width": 214,
+    "height": 140,
+    "layer": [
+      {
+        "mark": {
+          "type": "line",
+          "strokeWidth": 2,
+          "interpolate": "monotone",
+          "strokeCap": "round"
+        },
+        "encoding": {
+          "x": {
+            "field": "year",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                1990,
+                2025
+              ]
+            },
+            "axis": {
+              "values": [
+                1990,
+                2000,
+                2010,
+                2020
+              ],
+              "format": "d",
+              "title": "Year first aired",
+              "grid": false,
+              "labelFontSize": 11,
+              "titleFontSize": 11
+            }
+          },
+          "y": {
+            "field": "med",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                0,
+                45
+              ]
+            },
+            "axis": {
+              "values": [
+                0,
+                15,
+                30,
+                45
+              ],
+              "title": "Episodes per season",
+              "titleFontSize": 11,
+              "labelFontSize": 11,
+              "gridOpacity": 0.6
+            }
+          },
+          "color": {
+            "field": "role",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "The country named above",
+                "United Kingdom"
+              ],
+              "range": [
+                {
+                  "expr": "mark"
+                },
+                {
+                  "expr": "accent"
+                }
+              ]
+            },
+            "legend": {
+              "title": null,
+              "orient": "top",
+              "direction": "horizontal",
+              "labelFontSize": 12,
+              "symbolType": "stroke",
+              "symbolStrokeWidth": 3,
+              "offset": 4
+            }
+          },
+          "detail": {
+            "field": "series"
+          },
+          "tooltip": [
+            {
+              "field": "series",
+              "title": "Country"
+            },
+            {
+              "field": "year",
+              "title": "Year",
+              "format": "d"
+            },
+            {
+              "field": "med",
+              "title": "Median episodes per season",
+              "format": ".1f"
+            },
+            {
+              "field": "n",
+              "title": "Series in the three years"
+            }
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "cut >= 2025"
+          },
+          {
+            "filter": "datum.iso !== 'GB'"
+          },
+          {
+            "joinaggregate": [
+              {
+                "op": "max",
+                "field": "year",
+                "as": "last"
+              }
+            ],
+            "groupby": [
+              "series"
+            ]
+          },
+          {
+            "filter": "datum.year === datum.last"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "dx": 5,
+          "fontSize": 12,
+          "fontWeight": 600
+        },
+        "encoding": {
+          "x": {
+            "field": "year",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "med",
+            "type": "quantitative"
+          },
+          "text": {
+            "field": "med",
+            "type": "quantitative",
+            "format": ".0f"
+          },
+          "color": {
+            "value": {
+              "expr": "mark"
+            }
+          }
+        }
+      },
+      {
+        "transform": [
+          {
+            "aggregate": [
+              {
+                "op": "count",
+                "as": "n"
+              }
+            ],
+            "groupby": [
+              "panel"
+            ]
+          },
+          {
+            "calculate": "min(cut + 0.15, 2025)",
+            "as": "x0"
+          },
+          {
+            "calculate": "2025",
+            "as": "x1"
+          }
+        ],
+        "mark": {
+          "type": "rect",
+          "color": {
+            "expr": "border"
+          },
+          "clip": true
+        },
+        "encoding": {
+          "x": {
+            "field": "x0",
+            "type": "quantitative"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y": {
+            "value": 0
+          },
+          "y2": {
+            "value": "height"
+          }
+        }
+      }
+    ]
+  },
+  "padding": 0,
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  },
+  "columns": 4
+}

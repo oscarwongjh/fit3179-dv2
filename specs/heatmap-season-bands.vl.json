@@ -1,0 +1,255 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Heatmap. Each column is a year from 1990 to 2025, each row a band of episodes per season, and the colour is the share of that year's new series that fell in the band.",
+  "title": {
+    "text": "The long season faded out, the short one took over",
+    "subtitle": [
+      "Share of each year's new series, by episodes per season. Each column adds up to 100%.",
+      "Darker cells hold a bigger share of that year's series."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "params": [
+    {
+      "name": "seq1",
+      "value": "#dbe5f0"
+    },
+    {
+      "name": "seq2",
+      "value": "#a9c0dc"
+    },
+    {
+      "name": "seq3",
+      "value": "#6e92c0"
+    },
+    {
+      "name": "seq4",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "seq5",
+      "value": "#1d3f6b"
+    },
+    {
+      "name": "border",
+      "value": "#f5efe2"
+    },
+    {
+      "name": "accent",
+      "value": "#d9601f"
+    },
+    {
+      "name": "ink",
+      "value": "#231c14"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    }
+  ],
+  "data": {
+    "url": "data/eps_band_by_year.csv"
+  },
+  "width": 720,
+  "height": 266,
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": {
+          "expr": "border"
+        },
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "axis": {
+            "values": [
+              1990,
+              1995,
+              2000,
+              2005,
+              2010,
+              2015,
+              2020,
+              2025
+            ],
+            "labelAngle": 0,
+            "title": "Year the series first aired",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "domain": false,
+            "ticks": false
+          }
+        },
+        "y": {
+          "field": "band",
+          "type": "ordinal",
+          "sort": [
+            "27 or more",
+            "21 to 26",
+            "14 to 20",
+            "11 to 13",
+            "7 to 10",
+            "5 or 6",
+            "1 to 4"
+          ],
+          "axis": {
+            "title": "Episodes per season",
+            "titleFontSize": 12,
+            "labelFontSize": 12,
+            "domain": false,
+            "ticks": false,
+            "labelFontWeight": {
+              "expr": "datum.value === '5 or 6' ? 700 : 400"
+            },
+            "labelColor": {
+              "expr": "datum.value === '5 or 6' ? accent : inkMuted"
+            }
+          }
+        },
+        "color": {
+          "field": "share",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              0.05,
+              0.1,
+              0.15,
+              0.22
+            ],
+            "range": [
+              {
+                "expr": "seq1"
+              },
+              {
+                "expr": "seq2"
+              },
+              {
+                "expr": "seq3"
+              },
+              {
+                "expr": "seq4"
+              },
+              {
+                "expr": "seq5"
+              }
+            ]
+          },
+          "legend": {
+            "title": "Share of the year's new series",
+            "orient": "top",
+            "direction": "horizontal",
+            "format": ".0%",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "gradientLength": 260,
+            "offset": 10
+          }
+        },
+        "tooltip": [
+          {
+            "field": "year",
+            "title": "Year"
+          },
+          {
+            "field": "band",
+            "title": "Episodes per season"
+          },
+          {
+            "field": "share",
+            "title": "Share of new series",
+            "format": ".0%"
+          },
+          {
+            "field": "n",
+            "title": "Series in this band"
+          },
+          {
+            "field": "total",
+            "title": "New series that year"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "band": "5 or 6",
+            "note": [
+              "The British six: 1 in 13",
+              "new series in 1990, 1 in 5 now"
+            ]
+          },
+          {
+            "band": "7 to 10",
+            "note": [
+              "The streaming eight: the most",
+              "common length since 2015"
+            ]
+          },
+          {
+            "band": "21 to 26",
+            "note": [
+              "The US network season: 1 in 8",
+              "new series in 1990, 1 in 25 now"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 14,
+        "fontSize": 12,
+        "lineHeight": 15
+      },
+      "encoding": {
+        "x": {
+          "value": "width"
+        },
+        "y": {
+          "field": "band",
+          "type": "ordinal",
+          "sort": [
+            "27 or more",
+            "21 to 26",
+            "14 to 20",
+            "11 to 13",
+            "7 to 10",
+            "5 or 6",
+            "1 to 4"
+          ]
+        },
+        "text": {
+          "field": "note"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.band === '5 or 6'",
+            "value": {
+              "expr": "accent"
+            }
+          },
+          "value": {
+            "expr": "ink"
+          }
+        }
+      }
+    }
+  ],
+  "padding": 0,
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

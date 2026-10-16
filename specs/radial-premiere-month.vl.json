@@ -1,0 +1,307 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Two radial charts, read like a clock with January at the top and months running clockwise. Each wedge is a month and its length is the share of that period's new American series that premiered in it. Dashed rings mark 10, 20 and 30 percent. Angles are computed in radians so the months cannot be reordered.",
+  "title": {
+    "text": "The autumn launch faded",
+    "subtitle": [
+      "Share of new American series premiering in each month. The networks used to launch",
+      "their new season every September; streaming services release all year round."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "params": [
+    {
+      "name": "mark",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "markSoft",
+      "value": "#dbe5f0"
+    },
+    {
+      "name": "ink",
+      "value": "#231c14"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    },
+    {
+      "name": "rule",
+      "value": "#d3c8b4"
+    },
+    {
+      "name": "border",
+      "value": "#f5efe2"
+    }
+  ],
+  "data": {
+    "url": "data/premiere_month_us.csv",
+    "format": {
+      "parse": {
+        "month": "number",
+        "share": "number",
+        "n": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "['January','February','March','April','May','June','July','August','September','October','November','December'][datum.month - 1]",
+      "as": "mon"
+    },
+    {
+      "calculate": "substring(datum.mon, 0, 3)",
+      "as": "mon3"
+    },
+    {
+      "calculate": "datum.era === '1990s' ? 'The 1990s' : '2020 to 2025'",
+      "as": "panel"
+    },
+    {
+      "calculate": "(datum.month - 1) * PI / 6",
+      "as": "t0"
+    },
+    {
+      "calculate": "datum.month * PI / 6",
+      "as": "t1"
+    },
+    {
+      "calculate": "(datum.month - 0.5) * PI / 6",
+      "as": "tm"
+    }
+  ],
+  "facet": {
+    "column": {
+      "field": "panel",
+      "type": "nominal",
+      "sort": [
+        "The 1990s",
+        "2020 to 2025"
+      ],
+      "header": {
+        "title": null,
+        "labelAnchor": "start",
+        "labelFontSize": 15,
+        "labelFontWeight": 600,
+        "labelPadding": 0
+      }
+    }
+  },
+  "spacing": 100,
+  "spec": {
+    "width": 400,
+    "height": 400,
+    "layer": [
+      {
+        "transform": [
+          {
+            "filter": "datum.month <= 3"
+          },
+          {
+            "calculate": "datum.month / 10",
+            "as": "r"
+          }
+        ],
+        "mark": {
+          "type": "arc",
+          "theta": 0,
+          "theta2": 6.2832,
+          "fill": null,
+          "stroke": {
+            "expr": "rule"
+          },
+          "strokeWidth": 1,
+          "strokeDash": [
+            3,
+            3
+          ]
+        },
+        "encoding": {
+          "radius": {
+            "field": "r",
+            "type": "quantitative",
+            "scale": {
+              "type": "sqrt",
+              "domain": [
+                0,
+                0.4
+              ],
+              "range": [
+                22,
+                180
+              ]
+            }
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "arc",
+          "innerRadius": 22,
+          "padAngle": 0.025,
+          "stroke": {
+            "expr": "mark"
+          },
+          "strokeWidth": 1
+        },
+        "encoding": {
+          "theta": {
+            "field": "t0",
+            "type": "quantitative",
+            "scale": null
+          },
+          "theta2": {
+            "field": "t1"
+          },
+          "radius": {
+            "field": "share",
+            "type": "quantitative"
+          },
+          "fill": {
+            "condition": {
+              "test": "datum.month === 9",
+              "value": {
+                "expr": "mark"
+              }
+            },
+            "value": {
+              "expr": "markSoft"
+            }
+          },
+          "tooltip": [
+            {
+              "field": "mon",
+              "title": "Month"
+            },
+            {
+              "field": "panel",
+              "title": "Period"
+            },
+            {
+              "field": "share",
+              "title": "Share of new series",
+              "format": ".0%"
+            },
+            {
+              "field": "n",
+              "title": "Series"
+            }
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "datum.month <= 3"
+          },
+          {
+            "calculate": "datum.month / 10",
+            "as": "r"
+          },
+          {
+            "calculate": "datum.month * 10 + '%'",
+            "as": "lab"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "theta": 0.26,
+          "fontSize": 11,
+          "align": "left",
+          "baseline": "bottom",
+          "dx": 2,
+          "dy": -1
+        },
+        "encoding": {
+          "radius": {
+            "field": "r",
+            "type": "quantitative"
+          },
+          "text": {
+            "field": "lab"
+          },
+          "color": {
+            "value": {
+              "expr": "inkMuted"
+            }
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "text",
+          "fontSize": 12,
+          "radius": 198
+        },
+        "encoding": {
+          "theta": {
+            "field": "tm",
+            "type": "quantitative",
+            "scale": null
+          },
+          "text": {
+            "field": "mon3"
+          },
+          "color": {
+            "condition": {
+              "test": "datum.month === 9",
+              "value": {
+                "expr": "ink"
+              }
+            },
+            "value": {
+              "expr": "inkMuted"
+            }
+          }
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "datum.month === 9"
+          },
+          {
+            "calculate": "datum.share * 0.42",
+            "as": "label_r"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "fontSize": 14,
+          "fontWeight": 700
+        },
+        "encoding": {
+          "theta": {
+            "field": "tm",
+            "type": "quantitative",
+            "scale": null
+          },
+          "radius": {
+            "field": "label_r",
+            "type": "quantitative"
+          },
+          "text": {
+            "field": "share",
+            "type": "quantitative",
+            "format": ".0%"
+          },
+          "color": {
+            "value": {
+              "expr": "border"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "padding": 0,
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

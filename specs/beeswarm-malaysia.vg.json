@@ -1,0 +1,607 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Beeswarm in rows. Each circle is one series that reached Malaysia's Netflix Top 10 for TV, July 2021 to October 2026, placed by its episodes per season and sized by its weeks in the Top 10. A force layout nudges circles apart within each row so none overlap. Rows group series by where they were made. The highlighted line marks six episodes, the British norm.",
+  "width": 1040,
+  "height": 600,
+  "padding": 0,
+  "autosize": "pad",
+  "title": {
+    "text": "Malaysia's favourites run 8 to 12 episodes a season",
+    "subtitle": [
+      "Each circle is a series from Malaysia's Netflix Top 10, placed by episodes per season and",
+      "sized by weeks in the Top 10. The tick in each row marks its median. Hover for titles."
+    ],
+    "anchor": "start",
+    "fontSize": 18,
+    "subtitleFontSize": 13,
+    "offset": 16
+  },
+  "signals": [
+    {
+      "name": "mark",
+      "value": "#3d6aa3"
+    },
+    {
+      "name": "markSoft",
+      "value": "#dbe5f0"
+    },
+    {
+      "name": "accent",
+      "value": "#d9601f"
+    },
+    {
+      "name": "ink",
+      "value": "#231c14"
+    },
+    {
+      "name": "inkMuted",
+      "value": "#62574a"
+    },
+    {
+      "name": "border",
+      "value": "#f5efe2"
+    },
+    {
+      "name": "rule",
+      "value": "#d3c8b4"
+    },
+    {
+      "name": "labelWidth",
+      "value": 150,
+      "description": "Room on the left for the row names."
+    }
+  ],
+  "data": [
+    {
+      "name": "shows",
+      "url": "data/netflix_my_shows.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "weeks": "number",
+          "eps": "number",
+          "seasons": "number",
+          "episodes": "number",
+          "titles": "number"
+        }
+      },
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "min(datum.eps, 40)",
+          "as": "eps_c"
+        },
+        {
+          "type": "formula",
+          "expr": "1.8 * sqrt(datum.weeks)",
+          "as": "r"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.group === 'Other' ? 'Everywhere else' : datum.group",
+          "as": "row"
+        },
+        {
+          "type": "formula",
+          "expr": "scale('x', datum.eps_c)",
+          "as": "cx"
+        },
+        {
+          "type": "formula",
+          "expr": "scale('y', datum.row) + bandwidth('y') / 2",
+          "as": "cy"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cx",
+          "as": "x"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.cy",
+          "as": "y"
+        },
+        {
+          "type": "force",
+          "static": true,
+          "iterations": 300,
+          "forces": [
+            {
+              "force": "collide",
+              "radius": {
+                "expr": "datum.r + 0.8"
+              },
+              "iterations": 2
+            },
+            {
+              "force": "x",
+              "x": "cx",
+              "strength": 0.6
+            },
+            {
+              "force": "y",
+              "y": "cy",
+              "strength": 0.12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "medians",
+      "source": "shows",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "row"
+          ],
+          "ops": [
+            "median",
+            "count"
+          ],
+          "fields": [
+            "eps",
+            "eps"
+          ],
+          "as": [
+            "med",
+            "n"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "named",
+      "source": "shows",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "indexof(['BoBoiBoy Galaxy', 'Squid Game', 'Wednesday', 'Money Heist'], datum.title) >= 0"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": [
+        0,
+        40
+      ],
+      "range": [
+        {
+          "signal": "labelWidth"
+        },
+        {
+          "signal": "width - 10"
+        }
+      ],
+      "zero": true
+    },
+    {
+      "name": "y",
+      "type": "band",
+      "domain": [
+        "South Korea",
+        "Japan",
+        "United States",
+        "Malaysia",
+        "United Kingdom",
+        "Everywhere else"
+      ],
+      "range": [
+        0,
+        {
+          "signal": "height"
+        }
+      ],
+      "paddingInner": 0.06
+    },
+    {
+      "name": "size",
+      "type": "linear",
+      "domain": [
+        0,
+        100
+      ],
+      "range": [
+        0,
+        {
+          "signal": "4 * 1.8 * 1.8 * 100"
+        }
+      ],
+      "zero": true
+    }
+  ],
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "x",
+      "values": [
+        1,
+        6,
+        10,
+        13,
+        20,
+        30,
+        40
+      ],
+      "title": "Episodes per season (series with more than 40 are drawn at 40)",
+      "titleFontSize": 12,
+      "labelFontSize": 12,
+      "encode": {
+        "labels": {
+          "update": {
+            "text": {
+              "signal": "datum.value === 40 ? '40+' : datum.label"
+            }
+          }
+        }
+      },
+      "grid": true,
+      "gridDash": [
+        2,
+        3
+      ],
+      "domain": false,
+      "tickSize": 0,
+      "labelPadding": 8
+    }
+  ],
+  "legends": [
+    {
+      "size": "size",
+      "orient": "none",
+      "legendX": {
+        "signal": "width - 230"
+      },
+      "legendY": -64,
+      "direction": "horizontal",
+      "title": "Weeks in the Top 10",
+      "values": [
+        1,
+        10,
+        40
+      ],
+      "symbolType": "circle",
+      "symbolFillColor": "transparent",
+      "titleFontSize": 12,
+      "labelFontSize": 12,
+      "encode": {
+        "symbols": {
+          "update": {
+            "stroke": {
+              "signal": "mark"
+            },
+            "strokeWidth": {
+              "value": 1.2
+            }
+          }
+        }
+      }
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": {
+        "data": "medians"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "labelWidth - 8"
+          },
+          "x2": {
+            "signal": "width"
+          },
+          "y": {
+            "scale": "y",
+            "field": "row",
+            "offset": {
+              "signal": "bandwidth('y') - 0.5"
+            }
+          },
+          "height": {
+            "value": 1
+          },
+          "fill": {
+            "signal": "rule"
+          }
+        }
+      }
+    },
+    {
+      "type": "rule",
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "scale": "x",
+            "value": 6
+          },
+          "y": {
+            "value": -6
+          },
+          "y2": {
+            "signal": "height"
+          },
+          "stroke": {
+            "signal": "accent"
+          },
+          "strokeWidth": {
+            "value": 1.5
+          },
+          "strokeDash": {
+            "value": [
+              5,
+              4
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "scale": "x",
+            "value": 6
+          },
+          "y": {
+            "value": -10
+          },
+          "text": {
+            "value": "The British six"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "bottom"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": 700
+          },
+          "fill": {
+            "signal": "accent"
+          }
+        }
+      }
+    },
+    {
+      "name": "dots",
+      "type": "symbol",
+      "from": {
+        "data": "shows"
+      },
+      "encode": {
+        "enter": {
+          "shape": {
+            "value": "circle"
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "field": "y"
+          },
+          "size": {
+            "signal": "4 * datum.r * datum.r"
+          },
+          "fill": {
+            "signal": "datum.group === 'United Kingdom' ? accent : mark"
+          },
+          "fillOpacity": {
+            "value": 0.8
+          },
+          "stroke": {
+            "signal": "border"
+          },
+          "strokeWidth": {
+            "value": 0.8
+          },
+          "tooltip": {
+            "signal": "{title: datum.title, 'Made in': datum.origin, 'Episodes per season': format(datum.eps, '.1f'), 'Seasons': datum.seasons, 'Weeks in the Top 10': datum.weeks}"
+          }
+        },
+        "hover": {
+          "fillOpacity": {
+            "value": 1
+          },
+          "stroke": {
+            "signal": "ink"
+          },
+          "strokeWidth": {
+            "value": 1.5
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {
+        "data": "medians"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "xc": {
+            "scale": "x",
+            "field": "med"
+          },
+          "width": {
+            "value": 3
+          },
+          "y": {
+            "scale": "y",
+            "field": "row",
+            "offset": 6
+          },
+          "height": {
+            "signal": "bandwidth('y') - 12"
+          },
+          "fill": {
+            "signal": "ink"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "medians"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "value": 0
+          },
+          "y": {
+            "scale": "y",
+            "field": "row",
+            "band": 0.5,
+            "offset": -9
+          },
+          "text": {
+            "field": "row"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "fontWeight": {
+            "signal": "datum.row === 'Malaysia' ? 700 : 600"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fill": {
+            "signal": "datum.row === 'United Kingdom' ? accent : ink"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "medians"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "value": 0
+          },
+          "y": {
+            "scale": "y",
+            "field": "row",
+            "band": 0.5,
+            "offset": 10
+          },
+          "text": {
+            "signal": "'median ' + format(datum.med, '.0f') + ', ' + datum.n + ' series'"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fill": {
+            "signal": "inkMuted"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "named"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "signal": "datum.y - datum.r - 3"
+          },
+          "text": {
+            "signal": "datum.title === 'Demon Slayer: Kimetsu no Yaiba' ? 'Demon Slayer' : datum.title"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "bottom"
+          },
+          "fontSize": {
+            "value": 11
+          },
+          "fontWeight": {
+            "value": 600
+          },
+          "fill": {
+            "signal": "ink"
+          },
+          "stroke": {
+            "signal": "border"
+          },
+          "strokeWidth": {
+            "value": 3
+          },
+          "strokeOpacity": {
+            "value": 0.85
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "named"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "signal": "datum.y - datum.r - 3"
+          },
+          "text": {
+            "signal": "datum.title === 'Demon Slayer: Kimetsu no Yaiba' ? 'Demon Slayer' : datum.title"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "bottom"
+          },
+          "fontSize": {
+            "value": 11
+          },
+          "fontWeight": {
+            "value": 600
+          },
+          "fill": {
+            "signal": "ink"
+          }
+        }
+      }
+    }
+  ]
+}
