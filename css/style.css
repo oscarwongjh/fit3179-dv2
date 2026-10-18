@@ -130,7 +130,7 @@ h1{grid-column:1/-1;margin:0 0 36px;font-size:clamp(3rem,9vw,6rem);font-weight:8
   line-height:.95;letter-spacing:-.015em}
 .byline{margin:4px 0 0;font-size:.875rem;line-height:1.55;color:var(--ink-muted)}
 .byline strong{color:var(--ink);font-weight:600}
-.standfirst{grid-column:2/span 2;margin:0;max-width:34em;font-size:1.3rem;line-height:1.45}
+.standfirst{grid-column:2/span 2;margin:0;max-width:29em;font-size:1.3rem;line-height:1.45}
 
 .stats{padding:36px 0 40px}
 
@@ -157,9 +157,15 @@ h1{grid-column:1/-1;margin:0 0 36px;font-size:clamp(3rem,9vw,6rem);font-weight:8
   border-radius:4px;color:var(--ink);font-variant-numeric:tabular-nums}
 .chapter-num::before{content:"CH "}
 h2{margin:0;font-size:1.95rem;font-weight:700;line-height:1.1;letter-spacing:-.01em}
-.prose{grid-column:2/span 2;max-width:32em;font-size:1.125rem}
+/* Body lines run about 60 characters, ten or so words, for comfortable reading. */
+.prose{grid-column:2/span 2;max-width:28.5em;font-size:1.125rem}
 .prose p{margin:0 0 1em}
-.figure{grid-column:1/-1;margin:36px 0 56px;overflow-x:auto}
+/* Charts are drawn for the 1040px column. In a narrower window they scale down to fit
+   rather than scroll; hover and tooltips still work, because Vega finds marks from the
+   element under the pointer. */
+.figure{grid-column:1/-1;min-width:0;margin:36px 0 56px}
+.figure .vega-embed{display:block;max-width:100%}
+.figure .vega-embed > svg{display:block;max-width:100%;height:auto}
 
 /* Each hue has one meaning on the whole page, in text as in the charts: orange is the
    United Kingdom, plum is Malaysia. */
@@ -273,7 +279,7 @@ h2{margin:0;font-size:1.95rem;font-weight:700;line-height:1.1;letter-spacing:-.0
 .timeline input:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:4px}
 .ticks{position:relative;height:1.4em;margin-top:6px;font-size:.78rem;color:var(--ink-muted);
   font-variant-numeric:tabular-nums}
-.ticks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.ticks span{position:absolute;top:0;line-height:1.4;transform:translateX(-50%);white-space:nowrap}
 .ticks .at-start{transform:none}
 .ticks .at-end{transform:translateX(-100%)}
 @media (max-width:760px){.player{flex-direction:column;gap:10px}.timeline{width:100%}}

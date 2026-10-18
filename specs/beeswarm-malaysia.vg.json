@@ -232,7 +232,7 @@
           "signal": "labelWidth"
         },
         {
-          "signal": "width - 10"
+          "signal": "width - 16"
         }
       ],
       "zero": true
