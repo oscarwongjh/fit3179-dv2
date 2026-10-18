@@ -70,6 +70,10 @@
       "value": "#f5efe2"
     },
     {
+      "name": "accentText",
+      "value": "#ad4416"
+    },
+    {
       "name": "reveal",
       "value": 6,
       "description": "How many of the six periods are uncovered, with fractions. A curtain in the page colour covers the rest, so the chart wipes on smoothly from left to right. js/charts.js moves it when the reader presses Play or drags the timeline; the default shows every period."
@@ -173,6 +177,42 @@
               "2020 to 2025"
             ]
           }
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "period": "2000 to 2004",
+            "y": 47.6,
+            "y2": 28.6
+          },
+          {
+            "period": "2020 to 2025",
+            "y": 21.6,
+            "y2": 10.6
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 1,
+        "color": {
+          "expr": "inkMuted"
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "period",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "y2": {
+          "field": "y2"
         }
       }
     },
@@ -533,7 +573,7 @@
           },
           {
             "period": "2000 to 2004",
-            "y": 54,
+            "y": 50,
             "note": "Middle half: 13 to 28 episodes",
             "dx": 0,
             "align": "center",
@@ -541,9 +581,9 @@
           },
           {
             "period": "2020 to 2025",
-            "y": 40,
+            "y": 24,
             "note": "Middle half: 6.5 to 10 episodes",
-            "dx": -40,
+            "dx": 0,
             "align": "center",
             "start": 2020
           },
@@ -584,7 +624,7 @@
           "condition": {
             "test": "indexof(datum.note, 'United Kingdom') === 0",
             "value": {
-              "expr": "accent"
+              "expr": "accentText"
             }
           },
           "value": {

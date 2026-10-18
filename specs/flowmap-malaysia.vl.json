@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Flow map on an azimuthal equidistant projection centred on Kuala Lumpur. On this projection every straight line from the centre is the shortest route over the globe and its length is the true distance, so each flow is drawn as a straight line from the country where the shows were made. Line width is that country's share of all weeks in Malaysia's Netflix Top 10 for TV, July 2021 to October 2026, or of one year's weeks while the Play button steps through the years. Malaysia's own shows are the circle at the centre.",
+  "description": "Flow map on an azimuthal equidistant projection centred on Kuala Lumpur. On this projection every straight line from the centre is the shortest route over the globe and its length is the true distance, so each flow is drawn as a straight line from the country where the shows were made. Line width is that country's share of all weeks in Malaysia's Netflix Top 10 for TV, July 2021 to October 2026, or of one year's weeks while the Play button steps through the years. Line width starts from zero; a hairline keeps the smallest countries visible. Malaysia's own shows are the plum circle at the centre, which marks Kuala Lumpur and is not sized by share.",
   "title": {
     "text": "Where Malaysia's favourite series come from",
     "subtitle": [
@@ -14,14 +14,6 @@
     "offset": 16
   },
   "params": [
-    {
-      "name": "mark",
-      "value": "#3d6aa3"
-    },
-    {
-      "name": "markSoft",
-      "value": "#dbe5f0"
-    },
     {
       "name": "accent",
       "value": "#d9601f"
@@ -43,8 +35,20 @@
       "value": "#62574a"
     },
     {
-      "name": "halo",
-      "value": "#1d3f6b"
+      "name": "malaysia",
+      "value": "#a03a6e"
+    },
+    {
+      "name": "malaysiaText",
+      "value": "#a03a6e"
+    },
+    {
+      "name": "accentText",
+      "value": "#ad4416"
+    },
+    {
+      "name": "fontSerif",
+      "value": "Besley, Georgia, serif"
     },
     {
       "name": "yearPos",
@@ -130,12 +134,84 @@
         {
           "calculate": "datum.iso === 'GB' ? 'United Kingdom' : 'Other countries'",
           "as": "role"
+        },
+        {
+          "filter": "datum.share > 0"
         }
       ],
       "mark": {
         "type": "rule",
         "strokeCap": "round",
-        "opacity": 0.85
+        "opacity": 0.75,
+        "strokeWidth": 0.75
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "longitude2": {
+          "field": "kl_lon"
+        },
+        "latitude2": {
+          "field": "kl_lat"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.iso === 'GB'",
+            "value": {
+              "expr": "accent"
+            }
+          },
+          "value": {
+            "expr": "ink"
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/netflix_my_origin.csv"
+      },
+      "transform": [
+        {
+          "pivot": "period",
+          "value": "share",
+          "groupby": [
+            "iso",
+            "name",
+            "lat",
+            "lon"
+          ]
+        },
+        {
+          "calculate": "datum[['2021','2022','2023','2024','2025','2026','all'][min(floor(yearPos), 6)]] * (1 - (yearPos - min(floor(yearPos), 6))) + datum[['2021','2022','2023','2024','2025','2026','all'][min(floor(yearPos) + 1, 6)]] * (yearPos - min(floor(yearPos), 6))",
+          "as": "share"
+        },
+        {
+          "filter": "datum.iso !== 'MY'"
+        },
+        {
+          "calculate": "101.7",
+          "as": "kl_lon"
+        },
+        {
+          "calculate": "3.1",
+          "as": "kl_lat"
+        },
+        {
+          "calculate": "datum.iso === 'GB' ? 'United Kingdom' : 'Other countries'",
+          "as": "role"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "strokeCap": "round",
+        "opacity": 0.75
       },
       "encoding": {
         "longitude": {
@@ -162,7 +238,7 @@
               0.6
             ],
             "range": [
-              0.8,
+              0,
               26
             ]
           },
@@ -179,10 +255,11 @@
             "titleFontSize": 12,
             "symbolType": "stroke",
             "symbolStrokeColor": {
-              "expr": "mark"
+              "expr": "ink"
             },
             "direction": "vertical",
-            "rowPadding": 8
+            "rowPadding": 8,
+            "symbolSize": 900
           }
         },
         "color": {
@@ -193,7 +270,7 @@
             }
           },
           "value": {
-            "expr": "mark"
+            "expr": "ink"
           }
         },
         "order": {
@@ -254,11 +331,11 @@
           "type": "quantitative"
         },
         "size": {
-          "value": 900
+          "value": 420
         },
         "color": {
           "value": {
-            "expr": "halo"
+            "expr": "malaysia"
           }
         },
         "tooltip": [
@@ -347,7 +424,7 @@
             "fontWeight": 600,
             "align": "left",
             "dx": {
-              "expr": "datum.iso === 'MY' ? 22 : datum.iso === 'US' || datum.iso === 'GB' ? 10 : 4"
+              "expr": "datum.iso === 'MY' ? 17 : datum.iso === 'US' || datum.iso === 'GB' ? 10 : 4"
             },
             "dy": {
               "expr": "datum.iso === 'MY' ? 0 : datum.iso === 'US' || datum.iso === 'GB' ? -12 : 0"
@@ -367,12 +444,20 @@
               "field": "label"
             },
             "color": {
-              "condition": {
-                "test": "datum.iso === 'GB'",
-                "value": {
-                  "expr": "accent"
+              "condition": [
+                {
+                  "test": "datum.iso === 'GB'",
+                  "value": {
+                    "expr": "accentText"
+                  }
+                },
+                {
+                  "test": "datum.iso === 'MY'",
+                  "value": {
+                    "expr": "malaysiaText"
+                  }
                 }
-              },
+              ],
               "value": {
                 "expr": "ink"
               }
@@ -446,7 +531,10 @@
         "fontSize": 64,
         "fontWeight": 700,
         "x": 850,
-        "y": 230
+        "y": 230,
+        "font": {
+          "expr": "fontSerif"
+        }
       },
       "encoding": {
         "text": {

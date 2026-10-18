@@ -28,13 +28,14 @@ function applyTokens(spec) {
 }
 
 function theme() {
-  const font = css("--font-sans"), ink = css("--ink"), muted = css("--ink-muted"),
-        rule = css("--rule");
+  const font = css("--font-sans"), serif = css("--font-serif"), ink = css("--ink"),
+        muted = css("--ink-muted"), rule = css("--rule");
   return {
     background: null,
     font,
     view: { stroke: null },
-    title: { font, subtitleFont: font, color: ink, subtitleColor: muted,
+    // Titles in the serif, like the page headings; everything read closely in the sans.
+    title: { font: serif, subtitleFont: font, color: ink, subtitleColor: muted,
              fontWeight: 700, subtitleFontWeight: 400 },
     text: { font },
     legend: { labelFont: font, titleFont: font, labelColor: muted, titleColor: ink,
@@ -207,7 +208,8 @@ function render() {
 
 // Vega measures label widths when it lays out a chart, so wait for the web font or
 // legends and annotations get spaced for the fallback face.
-Promise.all(["400", "600", "700"].map(w => document.fonts.load(`${w} 12px "Radio Canada"`)))
+Promise.all([...["400", "600", "700"].map(w => document.fonts.load(`${w} 12px "Radio Canada"`)),
+             document.fonts.load('700 18px "Besley"')])
   .catch(() => {})
   .then(render);
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);

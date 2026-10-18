@@ -76,7 +76,7 @@
       {
         "mark": {
           "type": "line",
-          "strokeWidth": 2,
+          "strokeWidth": 1.75,
           "interpolate": "monotone",
           "strokeCap": "round"
         },
@@ -176,7 +176,122 @@
               "title": "Series in the three years"
             }
           ]
-        }
+        },
+        "transform": [
+          {
+            "filter": "datum.iso === 'GB'"
+          }
+        ]
+      },
+      {
+        "mark": {
+          "type": "line",
+          "strokeWidth": 2.25,
+          "interpolate": "monotone",
+          "strokeCap": "round"
+        },
+        "encoding": {
+          "x": {
+            "field": "year",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                1990,
+                2025
+              ]
+            },
+            "axis": {
+              "values": [
+                1990,
+                2000,
+                2010,
+                2020
+              ],
+              "format": "d",
+              "title": "Year first aired",
+              "grid": false,
+              "labelFontSize": 11,
+              "titleFontSize": 11
+            }
+          },
+          "y": {
+            "field": "med",
+            "type": "quantitative",
+            "scale": {
+              "domain": [
+                0,
+                45
+              ]
+            },
+            "axis": {
+              "values": [
+                0,
+                15,
+                30,
+                45
+              ],
+              "title": "Episodes per season",
+              "titleFontSize": 11,
+              "labelFontSize": 11,
+              "gridOpacity": 0.6
+            }
+          },
+          "color": {
+            "field": "role",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "The country named above",
+                "United Kingdom"
+              ],
+              "range": [
+                {
+                  "expr": "mark"
+                },
+                {
+                  "expr": "accent"
+                }
+              ]
+            },
+            "legend": {
+              "title": null,
+              "orient": "top",
+              "direction": "horizontal",
+              "labelFontSize": 12,
+              "symbolType": "stroke",
+              "symbolStrokeWidth": 3,
+              "offset": 4
+            }
+          },
+          "detail": {
+            "field": "series"
+          },
+          "tooltip": [
+            {
+              "field": "series",
+              "title": "Country"
+            },
+            {
+              "field": "year",
+              "title": "Year",
+              "format": "d"
+            },
+            {
+              "field": "med",
+              "title": "Median episodes per season",
+              "format": ".1f"
+            },
+            {
+              "field": "n",
+              "title": "Series in the three years"
+            }
+          ]
+        },
+        "transform": [
+          {
+            "filter": "datum.iso !== 'GB'"
+          }
+        ]
       },
       {
         "transform": [

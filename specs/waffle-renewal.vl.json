@@ -14,20 +14,24 @@
   },
   "params": [
     {
-      "name": "mark",
-      "value": "#3d6aa3"
-    },
-    {
-      "name": "markSoft",
-      "value": "#dbe5f0"
-    },
-    {
       "name": "ink",
       "value": "#231c14"
     },
     {
       "name": "inkMuted",
       "value": "#62574a"
+    },
+    {
+      "name": "share1",
+      "value": "#d3e6d4"
+    },
+    {
+      "name": "share4",
+      "value": "#2f7a49"
+    },
+    {
+      "name": "fontSerif",
+      "value": "Besley, Georgia, serif"
     }
   ],
   "data": {
@@ -119,10 +123,10 @@
               ],
               "range": [
                 {
-                  "expr": "mark"
+                  "expr": "share4"
                 },
                 {
-                  "expr": "markSoft"
+                  "expr": "share1"
                 }
               ]
             },
@@ -170,7 +174,10 @@
           "fontSize": 30,
           "fontWeight": 700,
           "dy": 14,
-          "x": 0
+          "x": 0,
+          "font": {
+            "expr": "fontSerif"
+          }
         },
         "encoding": {
           "y": {

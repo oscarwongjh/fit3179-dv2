@@ -14,14 +14,6 @@
   },
   "params": [
     {
-      "name": "mark",
-      "value": "#3d6aa3"
-    },
-    {
-      "name": "markSoft",
-      "value": "#dbe5f0"
-    },
-    {
       "name": "ink",
       "value": "#231c14"
     },
@@ -36,6 +28,14 @@
     {
       "name": "border",
       "value": "#f5efe2"
+    },
+    {
+      "name": "share1",
+      "value": "#d3e6d4"
+    },
+    {
+      "name": "share4",
+      "value": "#2f7a49"
     }
   ],
   "data": {
@@ -131,20 +131,20 @@
                 0.4
               ],
               "range": [
-                22,
+                0,
                 180
               ]
-            }
+            },
+            "stack": null
           }
         }
       },
       {
         "mark": {
           "type": "arc",
-          "innerRadius": 22,
           "padAngle": 0.025,
           "stroke": {
-            "expr": "mark"
+            "expr": "share4"
           },
           "strokeWidth": 1
         },
@@ -159,17 +159,18 @@
           },
           "radius": {
             "field": "share",
-            "type": "quantitative"
+            "type": "quantitative",
+            "stack": null
           },
           "fill": {
             "condition": {
               "test": "datum.month === 9",
               "value": {
-                "expr": "mark"
+                "expr": "share4"
               }
             },
             "value": {
-              "expr": "markSoft"
+              "expr": "share1"
             }
           },
           "tooltip": [
@@ -219,7 +220,8 @@
         "encoding": {
           "radius": {
             "field": "r",
-            "type": "quantitative"
+            "type": "quantitative",
+            "stack": null
           },
           "text": {
             "field": "lab"
@@ -282,7 +284,8 @@
           },
           "radius": {
             "field": "label_r",
-            "type": "quantitative"
+            "type": "quantitative",
+            "stack": null
           },
           "text": {
             "field": "share",

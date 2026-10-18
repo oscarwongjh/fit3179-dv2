@@ -25,7 +25,7 @@
     {
       "name": "progress",
       "value": 1,
-      "description": "How far each filled circle has shrunk, from 0 (drawn at the old season length) to 1 (the new one). js/charts.js animates it from 0 to 1 once, when the chart first scrolls into view; on its own the spec shows the finished state."
+      "description": "How far each filled circle has shrunk, from 0 (drawn at the old season length) to 1 (the new one). js/charts.js moves it when the reader presses Play or drags the timeline; on its own the spec shows the finished state."
     },
     {
       "name": "mark",

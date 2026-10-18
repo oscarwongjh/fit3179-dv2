@@ -7,7 +7,7 @@
 <meta name="author" content="Oscar Wong">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Radio+Canada:ital,wdth,wght@0,75..100,300..700;1,75..100,300..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Besley:wght@400..900&family=Radio+Canada:ital,wdth,wght@0,75..100,300..700;1,75..100,300..700&display=swap">
 <link rel="stylesheet" href="css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -76,6 +76,22 @@
       <span class="stat-label">episodes in a typical Mexican season, before 2005 and since
       2015</span>
     </div>
+  </section>
+
+  <section class="key grid" aria-label="How to read the colours">
+    <p class="key-title">Reading the colours</p>
+    <ul>
+      <li><span class="swatch" style="--c:var(--viz-accent)"></span><span><strong>Orange</strong> is
+      always the United Kingdom.</span></li>
+      <li><span class="swatch" style="--c:var(--viz-mark)"></span><span><strong>Blue</strong> is
+      always season length, in episodes.</span></li>
+      <li><span class="swatch" style="--c:var(--viz-share4)"></span><span><strong>Green</strong> is
+      always a share of new series.</span></li>
+      <li><span class="swatch" style="--c:var(--viz-malaysia)"></span><span><strong>Plum</strong> is
+      always Malaysia.</span></li>
+      <li><span class="swatch" style="--c:var(--viz-context)"></span><span><strong>Grey</strong> is
+      context: other countries for comparison, or too little data to measure.</span></li>
+    </ul>
   </section>
 
   <section class="chapter grid" id="world">
@@ -220,7 +236,8 @@
       635 series made the list, and 624 of them were matched to The Movie Database to find
       where each was made and how long its seasons run.</p>
       <p>South Korea leads by far. Korean series filled 47% of all the weeks in
-      Malaysia&rsquo;s Top 10, nearly three times the American share.</p>
+      Malaysia&rsquo;s Top 10, nearly three times the American share. Series made in
+      <span class="my">Malaysia</span> filled 8%.</p>
     </div>
     <figure class="figure">
       <div id="flowmap-malaysia"></div>
@@ -236,9 +253,10 @@
       several countries is split evenly between them.</p>
     </aside>
     <div class="prose">
-      <p>Malaysian series came fourth overall, with 8% of all weeks, led by the animated
+      <p><span class="my">Malaysian series</span> came fourth overall, led by the animated
       <i>BoBoiBoy Galaxy</i>, <i>Mechamato</i> and <i>Upin &amp; Ipin</i>. They have
-      climbed, from sixth place in 2021 to fourth in every year since 2024.</p>
+      climbed, from last place in 2021, behind even British series, to fourth in every year
+      since 2024, behind only Korea, the United States and Japan.</p>
     </div>
     <figure class="figure"><div id="bump-malaysia"></div></figure>
     <aside class="aside">

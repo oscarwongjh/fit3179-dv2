@@ -46,9 +46,56 @@
       "value": "#d3c8b4"
     },
     {
+      "name": "malaysia",
+      "value": "#a03a6e"
+    },
+    {
+      "name": "malaysiaText",
+      "value": "#a03a6e"
+    },
+    {
+      "name": "accentText",
+      "value": "#ad4416"
+    },
+    {
       "name": "labelWidth",
       "value": 150,
       "description": "Room on the left for the row names."
+    },
+    {
+      "name": "rowNames",
+      "value": [
+        "South Korea",
+        "Japan",
+        "United States",
+        "Malaysia",
+        "United Kingdom",
+        "Everywhere else"
+      ],
+      "description": "Rows from top to bottom."
+    },
+    {
+      "name": "rowSizes",
+      "value": [
+        168,
+        88,
+        104,
+        84,
+        70,
+        86
+      ],
+      "description": "Height of each row in pixels. Rows are as tall as their swarm needs, so South Korea's 213 series stay inside their own row."
+    },
+    {
+      "name": "rowTops",
+      "value": [
+        0,
+        168,
+        256,
+        360,
+        444,
+        514
+      ]
     }
   ],
   "data": [
@@ -88,7 +135,7 @@
         },
         {
           "type": "formula",
-          "expr": "scale('y', datum.row) + bandwidth('y') / 2",
+          "expr": "rowTops[indexof(rowNames, datum.row)] + rowSizes[indexof(rowNames, datum.row)] / 2",
           "as": "cy"
         },
         {
@@ -148,6 +195,16 @@
             "med",
             "n"
           ]
+        },
+        {
+          "type": "formula",
+          "expr": "rowTops[indexof(rowNames, datum.row)]",
+          "as": "top"
+        },
+        {
+          "type": "formula",
+          "expr": "rowSizes[indexof(rowNames, datum.row)]",
+          "as": "h"
         }
       ]
     },
@@ -179,25 +236,6 @@
         }
       ],
       "zero": true
-    },
-    {
-      "name": "y",
-      "type": "band",
-      "domain": [
-        "South Korea",
-        "Japan",
-        "United States",
-        "Malaysia",
-        "United Kingdom",
-        "Everywhere else"
-      ],
-      "range": [
-        0,
-        {
-          "signal": "height"
-        }
-      ],
-      "paddingInner": 0.06
     },
     {
       "name": "size",
@@ -273,7 +311,7 @@
         "symbols": {
           "update": {
             "stroke": {
-              "signal": "mark"
+              "signal": "inkMuted"
             },
             "strokeWidth": {
               "value": 1.2
@@ -299,11 +337,7 @@
             "signal": "width"
           },
           "y": {
-            "scale": "y",
-            "field": "row",
-            "offset": {
-              "signal": "bandwidth('y') - 0.5"
-            }
+            "signal": "datum.top + datum.h - 0.5"
           },
           "height": {
             "value": 1
@@ -372,7 +406,7 @@
             "value": 700
           },
           "fill": {
-            "signal": "accent"
+            "signal": "accentText"
           }
         }
       }
@@ -400,7 +434,7 @@
             "signal": "4 * datum.r * datum.r"
           },
           "fill": {
-            "signal": "datum.group === 'United Kingdom' ? accent : mark"
+            "signal": "datum.group === 'United Kingdom' ? accent : datum.group === 'Malaysia' ? malaysia : mark"
           },
           "fillOpacity": {
             "value": 0.8
@@ -444,12 +478,10 @@
             "value": 3
           },
           "y": {
-            "scale": "y",
-            "field": "row",
-            "offset": 6
+            "signal": "datum.top + 6"
           },
           "height": {
-            "signal": "bandwidth('y') - 12"
+            "signal": "datum.h - 12"
           },
           "fill": {
             "signal": "ink"
@@ -469,10 +501,7 @@
             "value": 0
           },
           "y": {
-            "scale": "y",
-            "field": "row",
-            "band": 0.5,
-            "offset": -9
+            "signal": "datum.top + datum.h / 2 - 9"
           },
           "text": {
             "field": "row"
@@ -487,7 +516,7 @@
             "value": "middle"
           },
           "fill": {
-            "signal": "datum.row === 'United Kingdom' ? accent : ink"
+            "signal": "datum.row === 'United Kingdom' ? accentText : datum.row === 'Malaysia' ? malaysiaText : ink"
           }
         }
       }
@@ -504,10 +533,7 @@
             "value": 0
           },
           "y": {
-            "scale": "y",
-            "field": "row",
-            "band": 0.5,
-            "offset": 10
+            "signal": "datum.top + datum.h / 2 + 10"
           },
           "text": {
             "signal": "'median ' + format(datum.med, '.0f') + ', ' + datum.n + ' series'"

@@ -1,11 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Bump chart. Each line follows where series from one country ranked, by weeks in Malaysia's Netflix Top 10 for TV, in each year from 2021 to 2026. Malaysia is in the main data colour, the United Kingdom in the highlight colour, the rest in grey, and every line is labelled at both ends.",
+  "description": "Bump chart. Each line follows where series from one country ranked, by weeks in Malaysia's Netflix Top 10 for TV, in each year from 2021 to 2026. Malaysia is in plum and the United Kingdom in orange, as everywhere on the page; the rest are grey, with all other countries together dashed, and every line is labelled at both ends.",
   "title": {
     "text": "Malaysian series climbed the ranks",
     "subtitle": [
       "Ranking of where Malaysia's Top 10 series were made, by weeks in the Top 10 each year.",
-      "2021 counts from July and 2026 runs to early October."
+      "Everywhere else, dashed, is all other countries together. 2021 counts from July and 2026 runs to early October."
     ],
     "anchor": "start",
     "fontSize": 18,
@@ -13,10 +13,6 @@
     "offset": 16
   },
   "params": [
-    {
-      "name": "mark",
-      "value": "#3d6aa3"
-    },
     {
       "name": "accent",
       "value": "#d9601f"
@@ -32,6 +28,18 @@
     {
       "name": "inkMuted",
       "value": "#62574a"
+    },
+    {
+      "name": "malaysia",
+      "value": "#a03a6e"
+    },
+    {
+      "name": "malaysiaText",
+      "value": "#a03a6e"
+    },
+    {
+      "name": "accentText",
+      "value": "#ad4416"
     }
   ],
   "data": {
@@ -51,7 +59,7 @@
       "as": "who"
     },
     {
-      "calculate": "datum.group === 'Malaysia' ? 'mark' : datum.group === 'United Kingdom' ? 'accent' : 'context'",
+      "calculate": "datum.group === 'Malaysia' ? 'malaysia' : datum.group === 'United Kingdom' ? 'accent' : 'context'",
       "as": "tone"
     }
   ],
@@ -93,9 +101,9 @@
       "encoding": {
         "color": {
           "condition": {
-            "test": "datum.tone === 'mark'",
+            "test": "datum.tone === 'malaysia'",
             "value": {
-              "expr": "mark"
+              "expr": "malaysia"
             }
           },
           "value": {
@@ -108,6 +116,19 @@
             "value": 5
           },
           "value": 2.5
+        },
+        "strokeDash": {
+          "condition": {
+            "test": "datum.group === 'Other'",
+            "value": [
+              5,
+              4
+            ]
+          },
+          "value": [
+            1,
+            0
+          ]
         }
       }
     },
@@ -144,9 +165,9 @@
         "color": {
           "condition": [
             {
-              "test": "datum.tone === 'mark'",
+              "test": "datum.tone === 'malaysia'",
               "value": {
-                "expr": "mark"
+                "expr": "malaysia"
               }
             },
             {
@@ -207,15 +228,15 @@
         "color": {
           "condition": [
             {
-              "test": "datum.tone === 'mark'",
+              "test": "datum.tone === 'malaysia'",
               "value": {
-                "expr": "mark"
+                "expr": "malaysiaText"
               }
             },
             {
               "test": "datum.tone === 'accent'",
               "value": {
-                "expr": "accent"
+                "expr": "accentText"
               }
             }
           ],
@@ -252,15 +273,15 @@
         "color": {
           "condition": [
             {
-              "test": "datum.tone === 'mark'",
+              "test": "datum.tone === 'malaysia'",
               "value": {
-                "expr": "mark"
+                "expr": "malaysiaText"
               }
             },
             {
               "test": "datum.tone === 'accent'",
               "value": {
-                "expr": "accent"
+                "expr": "accentText"
               }
             }
           ],

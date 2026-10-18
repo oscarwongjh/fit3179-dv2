@@ -4,8 +4,8 @@
   "title": {
     "text": "American seasons slid onto the British shape",
     "subtitle": [
-      "Share of each decade's new series at each season length. The peaks are the most",
-      "common lengths. The median, the middle series, is written at the right of each row."
+      "Share of each decade's new series at each season length, so the peaks are the most common",
+      "lengths. The tallest, British six-episode series in the 2020s, is 30%. Medians are at the right."
     ],
     "anchor": "start",
     "fontSize": 18,
@@ -28,6 +28,10 @@
     {
       "name": "inkMuted",
       "value": "#62574a"
+    },
+    {
+      "name": "accentText",
+      "value": "#ad4416"
     },
     {
       "name": "rowHeight",
@@ -78,8 +82,7 @@
           "interpolate": "monotone",
           "line": {
             "strokeWidth": 2
-          },
-          "fillOpacity": 0.55
+          }
         },
         "encoding": {
           "x": {
@@ -150,9 +153,9 @@
               "orient": "top",
               "direction": "horizontal",
               "labelFontSize": 13,
-              "symbolType": "square",
-              "symbolSize": 160,
-              "offset": 6
+              "symbolType": "stroke",
+              "offset": 6,
+              "symbolStrokeWidth": 3
             }
           },
           "order": {
@@ -181,7 +184,14 @@
               "field": "n",
               "title": "Series in the decade"
             }
-          ]
+          ],
+          "fillOpacity": {
+            "condition": {
+              "test": "datum.country === 'United Kingdom'",
+              "value": 0
+            },
+            "value": 0.5
+          }
         }
       },
       {
@@ -213,8 +223,9 @@
             "field": "lab"
           },
           "color": {
-            "field": "country",
-            "type": "nominal"
+            "value": {
+              "expr": "mark"
+            }
           }
         }
       },
@@ -247,8 +258,9 @@
             "field": "lab"
           },
           "color": {
-            "field": "country",
-            "type": "nominal"
+            "value": {
+              "expr": "accentText"
+            }
           }
         }
       }
