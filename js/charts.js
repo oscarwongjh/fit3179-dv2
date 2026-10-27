@@ -1,7 +1,7 @@
 // Colours and the typeface live in css/style.css. Each spec declares the colours it
 // uses as Vega-Lite params or Vega signals, with light-mode defaults so the JSON still
 // renders on its own in the Vega editor. Before embedding, those defaults are swapped
-// for the live values, so light and dark mode are handled by the stylesheet alone.
+// for the live values, so every colour is set in the stylesheet alone.
 const CHARTS = [
   ["#choropleth-eps", "specs/choropleth-eps.vl.json"],
   ["#dorling-eps-change", "specs/dorling-eps-change.vg.json"],
@@ -212,4 +212,3 @@ Promise.all([...["400", "600", "700"].map(w => document.fonts.load(`${w} 12px "R
              document.fonts.load('700 18px "Besley"')])
   .catch(() => {})
   .then(render);
-window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);

@@ -2,6 +2,7 @@
    js/charts.js copies each --viz-* value into the spec param or signal of the
    same name (--viz-ink-muted fills "inkMuted") before the chart renders. */
 /* scheme:start */
+/* Light only: the page always uses this cream scheme, whatever the system theme. */
 :root{
   --bg:#f5efe2;
   --ink:#231c14;
@@ -36,68 +37,6 @@
   --viz-font-serif:var(--font-serif);
   --viz-ink:var(--ink);
   --viz-ink-muted:var(--ink-muted);
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#18140f;
-  --ink:#f3ece0;
-  --ink-muted:#bdb2a2;
-  --rule:#383028;
-  --accent-text:#f08a52;
-  --viz-seq1:#1c2a3d;
-  --viz-seq2:#24406a;
-  --viz-seq3:#3561a0;
-  --viz-seq4:#5b8bd0;
-  --viz-seq5:#a7c6ef;
-  --viz-mark:#4f7fc4;
-  --viz-mark-soft:#1f2c40;
-  --viz-accent:#e2692a;
-  --viz-halo:#13233b;
-  --viz-accent-halo:#6b2a0b;
-  --viz-accent-text:#f08a52;
-  --viz-share1:#1b2d22;
-  --viz-share2:#24503a;
-  --viz-share3:#33784f;
-  --viz-share4:#57a671;
-  --viz-share5:#a8dbb5;
-  --viz-malaysia:#b9508a;
-  --viz-malaysia-text:#d57aa8;
-  --viz-no-data:#2b251e;
-  --viz-context:#a69c8c;
-  --viz-rule:#3d352c;
-  --tv-body:#5a3a24;
-  --tv-trim:#24190f;
-  --tv-detail:#9c7a50;
-}}
-:root[data-theme="dark"]{
-  --bg:#18140f;
-  --ink:#f3ece0;
-  --ink-muted:#bdb2a2;
-  --rule:#383028;
-  --accent-text:#f08a52;
-  --viz-seq1:#1c2a3d;
-  --viz-seq2:#24406a;
-  --viz-seq3:#3561a0;
-  --viz-seq4:#5b8bd0;
-  --viz-seq5:#a7c6ef;
-  --viz-mark:#4f7fc4;
-  --viz-mark-soft:#1f2c40;
-  --viz-accent:#e2692a;
-  --viz-halo:#13233b;
-  --viz-accent-halo:#6b2a0b;
-  --viz-accent-text:#f08a52;
-  --viz-share1:#1b2d22;
-  --viz-share2:#24503a;
-  --viz-share3:#33784f;
-  --viz-share4:#57a671;
-  --viz-share5:#a8dbb5;
-  --viz-malaysia:#b9508a;
-  --viz-malaysia-text:#d57aa8;
-  --viz-no-data:#2b251e;
-  --viz-context:#a69c8c;
-  --viz-rule:#3d352c;
-  --tv-body:#5a3a24;
-  --tv-trim:#24190f;
-  --tv-detail:#9c7a50;
 }
 /* scheme:end */
 
@@ -254,10 +193,8 @@ h2{margin:0;font-size:1.95rem;font-weight:700;line-height:1.1;letter-spacing:-.0
 .tv-tune:hover{background:var(--ink-muted);border-color:var(--ink-muted)}
 .tv-capture .tv-tune{display:none}
 
-/* Play buttons under the animated charts. The icon swaps to a stop square while a chart
-   plays, and the label counts through the years. */
-.play::before{content:"\25B6";display:inline-block;width:1.1em;font-size:.8em}
-.play[aria-pressed="true"]::before{content:"\25A0"}
+/* Play buttons under the animated charts. Text only: the label changes to Stop while a
+   chart plays and counts through the years. */
 .play{font-variant-numeric:tabular-nums;min-width:11.5em;text-align:left}
 
 /* Player: the Play button beside a timeline of the years. The timeline is a range input
